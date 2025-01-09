@@ -1,8 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+.expense {
+  display: flex;
+  gap: 50px;
+}
+
 .addExpense {
   display: flex;
   flex-direction: column;
 }
 
-input {
+input,
+button {
   width: 100px;
+}
+
+.expenseList {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.transactionDetails {
+  display: flex;
+  gap: 10px;
 }

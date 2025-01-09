@@ -8,8 +8,9 @@ function App() {
     name: "",
     amount: "",
     date: "",
-    category: "",
+    description: "",
   });
+  const [view, setView] = useState("expense");
 
   useEffect(() => {
     console.log(transactionSet);
@@ -32,45 +33,63 @@ function App() {
       name: "",
       amount: "",
       date: "",
-      category: "",
+      description: "",
     });
   };
   return (
     <>
-      <form className="addExpense" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="name"
-          name="name"
-          onChange={handleChange}
-          value={transactions.name}
-          required
-        ></input>
-        <input
-          type="number"
-          placeholder="amount"
-          name="amount"
-          onChange={handleChange}
-          value={transactions.amount}
-          required
-        ></input>
-        <input
-          type="date"
-          placeholder="date"
-          name="date"
-          onChange={handleChange}
-          value={transactions.date}
-          required
-        ></input>
-        <input
-          type="text"
-          placeholder="category"
-          name="category"
-          onChange={handleChange}
-          value={transactions.category}
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
+      {view === "expense" && (
+        <>
+          <div className="expense">
+            <form className="addExpense" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="name"
+                name="name"
+                onChange={handleChange}
+                value={transactions.name}
+                required
+              ></input>
+              <input
+                type="number"
+                placeholder="amount"
+                name="amount"
+                onChange={handleChange}
+                value={transactions.amount}
+                required
+              ></input>
+              <input
+                type="date"
+                placeholder="date"
+                name="date"
+                onChange={handleChange}
+                value={transactions.date}
+                required
+              ></input>
+              <input
+                type="text"
+                placeholder="description"
+                name="description"
+                onChange={handleChange}
+                value={transactions.description}
+              ></input>
+              <button type="submit">Submit</button>
+            </form>
+            <div className="expenseList">
+              {transactionSet.map((transaction, index) => (
+                <div key={index} className="expenseList">
+                  <div className="transactionTitle">{transaction.name}</div>
+                  <div className="transactionDetails">
+                    <p>{transaction.amount}</p>
+                    <p>{transaction.date}</p>
+                    <p>{transaction.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
