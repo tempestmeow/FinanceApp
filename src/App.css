@@ -2,12 +2,14 @@
   box-sizing: border-box;
 }
 
-.expense {
+.expense,
+.income {
   display: flex;
   gap: 50px;
 }
 
-.addExpense {
+.addExpense,
+.addIncome {
   display: flex;
   flex-direction: column;
 }
@@ -17,7 +19,8 @@ button {
   width: 100px;
 }
 
-.expenseList {
+.expenseList,
+.incomeList {
   display: flex;
   flex-direction: column;
   padding-top: 10px;
