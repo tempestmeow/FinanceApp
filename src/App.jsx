@@ -5,16 +5,12 @@ import "./App.css";
 function App() {
   const [transactionSet, setTransactionsSet] = useState([]);
   const [transactions, setTransactions] = useState({
-    name: "",
-    amount: "",
+    name: "Sweldo",
+    amount: 5000,
     date: "",
-    description: "",
+    description: "Digima Salary",
   });
   const [view, setView] = useState("expense");
-
-  useEffect(() => {
-    console.log(transactionSet);
-  }, [transactionSet]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,15 +22,18 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(transactions);
-
     setTransactionsSet([...transactionSet, transactions]);
     setTransactions({
-      name: "",
-      amount: "",
+      name: "Sweldo",
+      amount: 5000,
       date: "",
-      description: "",
+      description: "Digima Salary",
     });
+  };
+
+  const handleDelete = (index) => {
+    const transactionsLeft = transactionSet.filter((_, i) => i !== index);
+    setTransactionsSet(transactionsLeft);
   };
   return (
     <>
@@ -48,7 +47,6 @@ function App() {
                 name="name"
                 onChange={handleChange}
                 value={transactions.name}
-                required
               ></input>
               <input
                 type="number"
@@ -56,7 +54,6 @@ function App() {
                 name="amount"
                 onChange={handleChange}
                 value={transactions.amount}
-                required
               ></input>
               <input
                 type="date"
@@ -64,7 +61,6 @@ function App() {
                 name="date"
                 onChange={handleChange}
                 value={transactions.date}
-                required
               ></input>
               <input
                 type="text"
@@ -83,6 +79,12 @@ function App() {
                     <p>{transaction.amount}</p>
                     <p>{transaction.date}</p>
                     <p>{transaction.description}</p>
+                    <button
+                      className="deleteButton"
+                      onClick={() => handleDelete(index)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               ))}
