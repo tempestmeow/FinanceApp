@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-
 import "./App.css";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 function App() {
   const [expenseTransactionSet, setExpenseTransactionsSet] = useState([]);
@@ -97,6 +99,30 @@ function App() {
       setExpenseTransactionsSet(transactionsLeft);
     }
   };
+
+  function getBalance() {
+    return totalIncome - totalExpenses;
+  }
+
+  const incomeData = {
+    labels: incomeTransactionSet.map((transaction) => transaction.name),
+    datasets: [
+      {
+        data: incomeTransactionSet.map((transaction) => transaction.amount),
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverBackgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+      },
+    ],
+  };
+
   return (
     <>
       <div className="body">
@@ -226,16 +252,15 @@ function App() {
                 <div className="totalIncomes">
                   Total Income: {totalIncome} PHP
                 </div>
+                <div className="incomeGraph">income</div>
+                <div className="incomeGraph">
+                  <Doughnut data={incomeData} />
+                </div>
               </div>
             </>
           )}
           {view === "dashboard" && <div>dashboard</div>}
-          <div
-            className="balance"
-            onClick={() =>
-              console.log(new Date().toISOString().substring(0, 10))
-            }
-          >
+          <div className="balance" onClick={() => console.log(getBalance())}>
             Balance: {balance} PHP{" "}
           </div>
         </div>
