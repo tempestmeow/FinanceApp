@@ -7,7 +7,7 @@ function App() {
   const [expenseTransactions, setExpenseTransactions] = useState({
     name: "Foods",
     amount: 2000,
-    date: "",
+    date: new Date().toISOString().substring(0, 10),
     description: "Groceries",
   });
 
@@ -20,7 +20,7 @@ function App() {
   const [incomeTransactions, setIncomeTransactions] = useState({
     name: "Sweldo",
     amount: 5000,
-    date: "",
+    date: new Date().toISOString().substring(0, 10),
     description: "Digima Salary",
   });
   const [incomeTransactionSet, setIncomeTransactionsSet] = useState([]);
@@ -70,7 +70,7 @@ function App() {
       setExpenseTransactions({
         name: "Foods",
         amount: 2000,
-        date: "",
+        date: new Date().toISOString().substring(0, 10),
         description: "Grocery",
       });
     } else if (expense === "income") {
@@ -78,7 +78,7 @@ function App() {
       setIncomeTransactions({
         name: "Sweldo",
         amount: 5000,
-        date: "",
+        date: new Date().toISOString().substring(0, 10),
         description: "Digima Salary",
       });
     }
@@ -99,127 +99,147 @@ function App() {
   };
   return (
     <>
-      {view === "expense" && (
-        <>
-          <div className="expense">
-            <form
-              className="addExpense"
-              onSubmit={(e) => handleSubmit(e, "expense")}
-            >
-              <input
-                type="text"
-                placeholder="name"
-                name="name"
-                onChange={handleChange}
-                value={expenseTransactions.name}
-              ></input>
-              <input
-                type="number"
-                placeholder="amount"
-                name="amount"
-                onChange={handleChange}
-                value={expenseTransactions.amount}
-              ></input>
-              <input
-                type="date"
-                placeholder="date"
-                name="date"
-                onChange={handleChange}
-                value={expenseTransactions.date}
-              ></input>
-              <input
-                type="text"
-                placeholder="description"
-                name="description"
-                onChange={handleChange}
-                value={expenseTransactions.description}
-              ></input>
-              <button type="submit">Submit</button>
-            </form>
-            <div className="expenseList">
-              {expenseTransactionSet.map((transaction, index) => (
-                <div key={index} className="expenseList">
-                  <div className="transactionTitle">{transaction.name}</div>
-                  <div className="transactionDetails">
-                    <p>{transaction.amount}</p>
-                    <p>{transaction.date}</p>
-                    <p>{transaction.description}</p>
-                    <button
-                      className="deleteButton"
-                      onClick={() => handleDelete(index, "expense")}
-                    >
-                      Delete
-                    </button>
-                  </div>
+      <div className="body">
+        <div className="userNavigation">
+          <button onClick={() => setView("dashboard")}>Dashboard</button>
+          <button>Transactions</button>
+          <button onClick={() => setView("expense")}>Expense</button>
+          <button onClick={() => setView("income")}>Income</button>
+        </div>
+        <div className="mainDisplay">
+          {view === "expense" && (
+            <>
+              <div className="expense">
+                <form
+                  className="addExpense"
+                  onSubmit={(e) => handleSubmit(e, "expense")}
+                >
+                  <input
+                    type="text"
+                    placeholder="name"
+                    name="name"
+                    onChange={(e) => handleChange(e, "expense")}
+                    value={expenseTransactions.name}
+                  ></input>
+                  <input
+                    type="number"
+                    placeholder="amount"
+                    name="amount"
+                    onChange={(e) => handleChange(e, "expense")}
+                    value={expenseTransactions.amount}
+                  ></input>
+                  <input
+                    type="date"
+                    placeholder="date"
+                    name="date"
+                    onChange={(e) => handleChange(e, "expense")}
+                    value={expenseTransactions.date}
+                  ></input>
+                  <input
+                    type="text"
+                    placeholder="description"
+                    name="description"
+                    onChange={(e) => handleChange(e, "expense")}
+                    value={expenseTransactions.description}
+                  ></input>
+                  <button type="submit">Submit</button>
+                </form>
+                <div className="expenseList">
+                  {expenseTransactionSet.map((transaction, index) => (
+                    <div key={index} className="expenseList">
+                      <div className="transactionTitle">{transaction.name}</div>
+                      <div className="transactionDetails">
+                        <p>{transaction.amount}</p>
+                        <p>{transaction.date}</p>
+                        <p>{transaction.description}</p>
+                        <button
+                          className="deleteButton"
+                          onClick={() => handleDelete(index, "expense")}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="totalExpenses">
-              Total Expense: {totalExpenses} PHP
-            </div>
-          </div>
-        </>
-      )}
-      {view === "expense" && (
-        <>
-          <div className="income">
-            <form
-              className="addIncome"
-              onSubmit={(e) => handleSubmit(e, "income")}
-            >
-              <input
-                type="text"
-                placeholder="name"
-                name="name"
-                onChange={handleChange}
-                value={incomeTransactions.name}
-              ></input>
-              <input
-                type="number"
-                placeholder="amount"
-                name="amount"
-                onChange={handleChange}
-                value={incomeTransactions.amount}
-              ></input>
-              <input
-                type="date"
-                placeholder="date"
-                name="date"
-                onChange={handleChange}
-                value={incomeTransactions.date}
-              ></input>
-              <input
-                type="text"
-                placeholder="description"
-                name="description"
-                onChange={handleChange}
-                value={incomeTransactions.description}
-              ></input>
-              <button type="submit">Submit</button>
-            </form>
-            <div className="incomeList">
-              {incomeTransactionSet.map((transaction, index) => (
-                <div key={index} className="incomeList">
-                  <div className="transactionTitle">{transaction.name}</div>
-                  <div className="transactionDetails">
-                    <p>{transaction.amount}</p>
-                    <p>{transaction.date}</p>
-                    <p>{transaction.description}</p>
-                    <button
-                      className="deleteButton"
-                      onClick={() => handleDelete(index, "income")}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                <div className="totalExpenses">
+                  Total Expense: {totalExpenses} PHP
                 </div>
-              ))}
-            </div>
-            <div className="totalIncomes">Total Income: {totalIncome} PHP</div>
+              </div>
+            </>
+          )}
+          {view === "income" && (
+            <>
+              <div className="income">
+                <form
+                  className="addIncome"
+                  onSubmit={(e) => handleSubmit(e, "income")}
+                >
+                  <input
+                    type="text"
+                    placeholder="name"
+                    name="name"
+                    onChange={(e) => handleChange(e, "income")}
+                    value={incomeTransactions.name}
+                  ></input>
+                  <input
+                    type="number"
+                    placeholder="amount"
+                    name="amount"
+                    onChange={(e) => handleChange(e, "income")}
+                    value={incomeTransactions.amount}
+                  ></input>
+                  <input
+                    type="date"
+                    placeholder="date"
+                    name="date"
+                    onChange={(e) => handleChange(e, "income")}
+                    value={incomeTransactions.date}
+                  ></input>
+                  <input
+                    type="text"
+                    placeholder="description"
+                    name="description"
+                    onChange={(e) => handleChange(e, "income")}
+                    value={incomeTransactions.description}
+                  ></input>
+                  <button type="submit">Submit</button>
+                </form>
+                <div className="incomeList">
+                  {incomeTransactionSet.map((transaction, index) => (
+                    <div key={index} className="incomeList">
+                      <div className="transactionTitle">{transaction.name}</div>
+                      <div className="transactionDetails">
+                        <p>{transaction.amount}</p>
+                        <p>{transaction.date}</p>
+                        <p>{transaction.description}</p>
+                        <button
+                          className="deleteButton"
+                          onClick={() => handleDelete(index, "income")}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="totalIncomes">
+                  Total Income: {totalIncome} PHP
+                </div>
+              </div>
+            </>
+          )}
+          {view === "dashboard" && <div>dashboard</div>}
+          <div
+            className="balance"
+            onClick={() =>
+              console.log(new Date().toISOString().substring(0, 10))
+            }
+          >
+            Balance: {balance} PHP{" "}
           </div>
-        </>
-      )}
-      <div className="balance">Balance: {balance} PHP </div>
+        </div>
+      </div>
     </>
   );
 }
