@@ -202,7 +202,7 @@ function App() {
   };
 
   const toggleButtonClass = (i) => {
-    return activeButton === i ? "userButton activeButton" : "userButton";
+    return activeButton === i ? "activeButton" : "userButton";
   };
 
   return (

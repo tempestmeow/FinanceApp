@@ -54,30 +54,49 @@ button {
   flex-direction: column;
   background-color: #232348;
   gap: 10px;
-  padding: 45px;
+  padding: 30px;
   height: 800px;
   margin-top: 50px;
   border-radius: 50px;
   align-items: flex-start;
+  width: 230px;
+  align-items: center;
 }
-
 .userButton {
   background: none;
   border: none;
   padding: 5px 10px;
-  margin: 0;
   outline: none;
+  width: 100%;
   color: white;
   border: solid 2px transparent;
+  display: flex;
+  justify-content: flex-start;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    border-radius 0.3s ease;
+  border-radius: 30px;
+}
+
+.userButton:hover {
+  color: aliceblue;
+  background-color: #454569;
+  transition: all 0.3s ease;
 }
 
 .activeButton {
   background-color: #141444;
-  color: white;
+  color: rgb(245, 179, 229);
   padding: 5px 10px;
-  width: auto;
+  width: 100%;
   height: auto;
   border-radius: 30px;
   border: solid 2px #826cf0;
   box-shadow: 0 4px 15px rgba(117, 89, 255, 0.5);
+  display: flex;
+  justify-content: flex-start;
+  transition: all 1.15s ease;
 }
