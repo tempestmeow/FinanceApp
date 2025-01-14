@@ -8,7 +8,7 @@
   margin: 0;
 }
 
-.expense,
+.expenseForm,
 .income {
   display: flex;
   gap: 50px;
@@ -61,11 +61,12 @@ button {
   align-items: flex-start;
   width: 230px;
   align-items: center;
+  padding-top: 70px;
 }
 .userButton {
   background: none;
   border: none;
-  padding: 5px 10px;
+  padding: 3px 10px;
   outline: none;
   width: 100%;
   color: white;
@@ -89,14 +90,100 @@ button {
 
 .activeButton {
   background-color: #141444;
-  color: rgb(245, 179, 229);
-  padding: 5px 10px;
+  color: rgb(247, 205, 236);
+  padding: 3px 10px;
   width: 100%;
   height: auto;
   border-radius: 30px;
   border: solid 2px #826cf0;
-  box-shadow: 0 4px 15px rgba(117, 89, 255, 0.5);
+  box-shadow: 0px 1px 20px rgba(156, 89, 243, 0.5);
   display: flex;
   justify-content: flex-start;
   transition: all 1.15s ease;
+}
+
+.addExpense {
+  display: flex;
+  background-color: #232348;
+  flex-direction: column;
+  gap: 50px;
+  padding: 40px 100px 20px 100px;
+  height: 80vh;
+  border-radius: 50px;
+  align-items: center;
+}
+
+.formDiv {
+  display: flex;
+  flex-direction: column;
+  margin-top: 45px;
+  margin-left: 20px;
+  gap: 10px;
+}
+
+.formTitle {
+  font-size: 2.3rem;
+  font-family: "Host Grotesk", serif;
+  font-weight: 600;
+}
+
+.mainDisplay {
+  display: flex;
+}
+
+.expenseForm {
+  flex: 1;
+  width: auto;
+}
+
+input {
+  background-color: #232348;
+  color: #a6a6a6;
+  border: 3px solid #9282e1;
+  border-radius: 30px;
+  font-size: 1.4rem;
+  padding: 10px;
+  outline: none;
+  width: 300px;
+}
+
+input:focus {
+  color: rgb(206, 199, 199);
+  outline: none;
+  border: 3px solid #baafee;
+  box-shadow: 0px 1px 5px rgba(169, 135, 214, 0.5);
+  transition:
+    box-shadow 1s ease,
+    border 0.3s ease;
+}
+
+.formValue {
+  font-family: "Host Grotesk", serif;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.formPrice {
+  color: #e86b70;
+}
+
+.selectCategory {
+  width: 150px;
+  align-self: flex-end;
+  color: #a6a6a6;
+  background-color: #232348;
+  border: 2px solid #baafee;
+  outline: none;
+  font-family: "Host Grotesk", serif;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  padding: 2px;
+}
+
+option {
+  color: #a6a6a6;
+  background-color: #232348;
+  outline: none;
+  font-family: "Host Grotesk", serif;
+  height: 100%;
 }

@@ -195,7 +195,7 @@ function App() {
     ],
   };
 
-  const [activeButton, setActiveButton] = useState(null);
+  const [activeButton, setActiveButton] = useState(2);
 
   const handleButtonClick = (i) => {
     setActiveButton(i);
@@ -249,41 +249,54 @@ function App() {
         <div className="mainDisplay">
           {view === "expense" && (
             <>
-              <div className="expense">
-                <form
-                  className="addExpense"
-                  onSubmit={(e) => handleSubmit(e, "expense")}
-                >
-                  <input
-                    type="text"
-                    placeholder="name"
-                    name="name"
-                    onChange={(e) => handleChange(e, "expense")}
-                    value={expenseTransactions.name}
-                  ></input>
-                  <input
-                    type="number"
-                    placeholder="amount"
-                    name="amount"
-                    onChange={(e) => handleChange(e, "expense")}
-                    value={expenseTransactions.amount}
-                  ></input>
-                  <input
-                    type="date"
-                    placeholder="date"
-                    name="date"
-                    onChange={(e) => handleChange(e, "expense")}
-                    value={expenseTransactions.date}
-                  ></input>
-                  <input
-                    type="text"
-                    placeholder="description"
-                    name="description"
-                    onChange={(e) => handleChange(e, "expense")}
-                    value={expenseTransactions.description}
-                  ></input>
-                  <button type="submit">Submit</button>
-                </form>
+              <div className="expenseForm">
+                <div className="formDiv">
+                  <div className="formTitle">Expense</div>
+                  <form
+                    className="addExpense"
+                    onSubmit={(e) => handleSubmit(e, "expense")}
+                  >
+                    <div className="formValue">
+                      Total Expense:{" "}
+                      <span className="formPrice">${totalExpenses}</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Title"
+                      name="name"
+                      onChange={(e) => handleChange(e, "expense")}
+                      value={expenseTransactions.name}
+                      autoComplete="off"
+                    ></input>
+                    <input
+                      type="number"
+                      placeholder="Amount"
+                      name="amount"
+                      onChange={(e) => handleChange(e, "expense")}
+                      value={expenseTransactions.amount}
+                    ></input>
+                    <input
+                      type="date"
+                      placeholder="Date"
+                      name="date"
+                      onChange={(e) => handleChange(e, "expense")}
+                      value={expenseTransactions.date}
+                    ></input>
+                    <select className="selectCategory" placeholder="category">
+                      <option value="food">Food</option>
+                      <option value="grocery">Grocery</option>
+                      <option value="bills">Bills</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Description"
+                      name="description"
+                      onChange={(e) => handleChange(e, "expense")}
+                      value={expenseTransactions.description}
+                    ></input>
+                    <button type="submit">Submit</button>
+                  </form>
+                </div>
                 <div className="expenseList">
                   {expenseTransactionSet.map((transaction, index) => (
                     <div key={index} className="expenseList">
@@ -302,13 +315,12 @@ function App() {
                     </div>
                   ))}
                 </div>
-                <div className="totalExpenses">
-                  Total Expense: {totalExpenses} PHP
-                </div>
+                <div className="totalExpenses"></div>
                 <div className="expenseGraph">
                   <Doughnut data={expenseData} />
                 </div>
               </div>
+              <div className="expenseTransactions">SDAS</div>
             </>
           )}
           {view === "income" && (
@@ -378,7 +390,7 @@ function App() {
           )}
           {view === "dashboard" && <div>dashboard</div>}
           <div className="balance" onClick={() => console.log(getBalance())}>
-            Balance: {balance} PHP{" "}
+            {/* Balance: {balance} PHP{" "} */}
           </div>
           <div className="lineGraph"></div>
         </div>
