@@ -1,8 +1,30 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  ArcElement,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function App() {
   const [expenseTransactionSet, setExpenseTransactionsSet] = useState([]);
@@ -123,14 +145,106 @@ function App() {
     ],
   };
 
+  const expenseData = {
+    labels: expenseTransactionSet.map((transaction) => transaction.name),
+    datasets: [
+      {
+        data: expenseTransactionSet.map((transaction) => transaction.amount),
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverBackgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+      },
+    ],
+  };
+
+  const Utils = {
+    month: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+  };
+
+  const labels = Utils.month.slice(0, 7);
+  const lineChartData = {
+    labels: labels,
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
+  };
+
+  const [activeButton, setActiveButton] = useState(null);
+
+  const handleButtonClick = (i) => {
+    setActiveButton(i);
+  };
+
+  const toggleButtonClass = (i) => {
+    return activeButton === i ? "userButton activeButton" : "userButton";
+  };
+
   return (
     <>
       <div className="body">
         <div className="userNavigation">
-          <button onClick={() => setView("dashboard")}>Dashboard</button>
-          <button>Transactions</button>
-          <button onClick={() => setView("expense")}>Expense</button>
-          <button onClick={() => setView("income")}>Income</button>
+          <button
+            className={toggleButtonClass(0)}
+            onClick={() => {
+              setView("dashboard");
+              handleButtonClick(0);
+            }}
+          >
+            Dashboard
+          </button>
+          <button
+            className={toggleButtonClass(1)}
+            onClick={() => {
+              setView("dashboard");
+              handleButtonClick(1);
+            }}
+          >
+            Transactions
+          </button>
+          <button
+            className={toggleButtonClass(2)}
+            onClick={() => {
+              setView("expense");
+              handleButtonClick(2);
+            }}
+          >
+            Expense
+          </button>
+          <button
+            className={toggleButtonClass(3)}
+            onClick={() => {
+              setView("income");
+              handleButtonClick(3);
+            }}
+          >
+            Income
+          </button>
         </div>
         <div className="mainDisplay">
           {view === "expense" && (
@@ -190,6 +304,9 @@ function App() {
                 </div>
                 <div className="totalExpenses">
                   Total Expense: {totalExpenses} PHP
+                </div>
+                <div className="expenseGraph">
+                  <Doughnut data={expenseData} />
                 </div>
               </div>
             </>
@@ -263,6 +380,7 @@ function App() {
           <div className="balance" onClick={() => console.log(getBalance())}>
             Balance: {balance} PHP{" "}
           </div>
+          <div className="lineGraph"></div>
         </div>
       </div>
     </>

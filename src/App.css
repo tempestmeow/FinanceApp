@@ -1,10 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 * {
   box-sizing: border-box;
-}
-
-.body {
-  display: flex;
-  gap: 30px;
+  padding: 0;
+  margin: 0;
 }
 
 .expense,
@@ -21,7 +22,9 @@
 
 input,
 button {
-  width: 100px;
+  font-family: "Host Grotesk", serif;
+  font-weight: 500;
+  font-size: 1.3rem;
 }
 
 .expenseList,
@@ -36,7 +39,45 @@ button {
   gap: 10px;
 }
 
+.body {
+  display: flex;
+  gap: 30px;
+  background-color: #0f0f1f;
+  color: azure;
+  height: 100vh;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
 .userNavigation {
   display: flex;
   flex-direction: column;
+  background-color: #232348;
+  gap: 10px;
+  padding: 45px;
+  height: 800px;
+  margin-top: 50px;
+  border-radius: 50px;
+  align-items: flex-start;
+}
+
+.userButton {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  margin: 0;
+  outline: none;
+  color: white;
+  border: solid 2px transparent;
+}
+
+.activeButton {
+  background-color: #141444;
+  color: white;
+  padding: 5px 10px;
+  width: auto;
+  height: auto;
+  border-radius: 30px;
+  border: solid 2px #826cf0;
+  box-shadow: 0 4px 15px rgba(117, 89, 255, 0.5);
 }
