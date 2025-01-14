@@ -1,7 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -107,10 +108,11 @@ button {
   background-color: #232348;
   flex-direction: column;
   gap: 50px;
-  padding: 40px 100px 20px 100px;
+  padding: 40px 80px 20px 80px;
   height: 80vh;
   border-radius: 50px;
   align-items: center;
+  width: 600px;
 }
 
 .formDiv {
@@ -178,6 +180,7 @@ input:focus {
   border-radius: 30px;
   font-size: 1.1rem;
   padding: 2px;
+  margin-right: 70px;
 }
 
 option {
@@ -186,4 +189,45 @@ option {
   outline: none;
   font-family: "Host Grotesk", serif;
   height: 100%;
+}
+
+.submitBtn {
+  background-color: #00bf5e;
+  color: white;
+  border: none;
+  outline: none;
+  font-family: "Host Grotesk", serif;
+  font-weight: 700;
+  font-size: 1.03rem;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+
+.expenseTransactions {
+  display: flex;
+  flex-direction: column;
+}
+
+.transactionHeader {
+  font-size: 2.3rem;
+  font-family: "Host Grotesk", serif;
+  font-weight: 600;
+}
+
+.expenseLists {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.expenseCard {
+  display: flex;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-family: "Roboto", serif;
+  background-color: #232348;
+}
+
+.icon {
+  color: white;
 }

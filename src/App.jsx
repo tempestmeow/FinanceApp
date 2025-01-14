@@ -3,6 +3,7 @@ import "./App.css";
 import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 import { Line } from "react-chartjs-2";
+import BtcIcon from "./components/btc.jsx";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -245,6 +246,7 @@ function App() {
           >
             Income
           </button>
+          <div></div>
         </div>
         <div className="mainDisplay">
           {view === "expense" && (
@@ -294,15 +296,19 @@ function App() {
                       onChange={(e) => handleChange(e, "expense")}
                       value={expenseTransactions.description}
                     ></input>
-                    <button type="submit">Submit</button>
+                    <button type="submit" className="submitBtn">
+                      + Add Expense
+                    </button>
                   </form>
                 </div>
-                <div className="expenseList">
-                  {expenseTransactionSet.map((transaction, index) => (
-                    <div key={index} className="expenseList">
-                      <div className="transactionTitle">{transaction.name}</div>
-                      <div className="transactionDetails">
-                        <p>{transaction.amount}</p>
+                <div className="expenseTransactions">
+                  <p className="transactionHeader">Expense Transactions</p>
+                  <div className="expenseLists">
+                    {expenseTransactionSet.map((transaction, index) => (
+                      <div key={index} className="expenseCard">
+                        <BtcIcon />
+                        <p>{transaction.name}</p>
+                        <p>${transaction.amount}</p>
                         <p>{transaction.date}</p>
                         <p>{transaction.description}</p>
                         <button
@@ -312,15 +318,14 @@ function App() {
                           Delete
                         </button>
                       </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="totalExpenses"></div>
-                <div className="expenseGraph">
-                  <Doughnut data={expenseData} />
+                    ))}
+                  </div>
+                  <div className="totalExpenses"></div>
+                  <div className="expenseGraph">
+                    <Doughnut data={expenseData} />
+                  </div>
                 </div>
               </div>
-              <div className="expenseTransactions">SDAS</div>
             </>
           )}
           {view === "income" && (
