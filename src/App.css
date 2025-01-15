@@ -234,7 +234,7 @@ option {
 }
 
 .expenseLists::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #f9be0f, #f8c456);
+  background: linear-gradient(to bottom, #d42aff, #e696ea);
   height: 90px;
   border-radius: 30px;
 }
