@@ -219,6 +219,28 @@ option {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: 330px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.expenseLists::-webkit-scrollbar {
+  width: 7px;
+}
+
+.expenseLists::-webkit-scrollbar-track {
+  background: #313030;
+  border-radius: 30px;
+}
+
+.expenseLists::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f9be0f, #f8c456);
+  height: 90px;
+  border-radius: 30px;
+}
+
+.expenseLists::-webkit-scrollbar-thumb:hover {
+  background: #232348;
 }
 
 .expenseCard {
