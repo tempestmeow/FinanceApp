@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -118,7 +119,6 @@ button {
 .formDiv {
   display: flex;
   flex-direction: column;
-  margin-top: 45px;
   margin-left: 20px;
   gap: 10px;
 }
@@ -206,6 +206,7 @@ option {
 .expenseTransactions {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .transactionHeader {
@@ -217,17 +218,78 @@ option {
 .expenseLists {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .expenseCard {
   display: flex;
-  gap: 10px;
-  font-size: 1.3rem;
+  gap: 20px;
+  font-size: 1.1rem;
   font-family: "Roboto", serif;
   background-color: #232348;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  padding: 10px 30px;
 }
 
-.icon {
-  color: white;
+.circle {
+  width: 10px;
+  height: 10px;
+  background-color: #e86b70;
+  border-radius: 50%;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.transactionName {
+  font-size: 1.3rem;
+}
+
+.transactionDetails {
+  font-size: 1rem;
+  font-weight: 300;
+  gap: 30px;
+  margin-left: 20px;
+  margin-top: 3px;
+  align-items: center;
+}
+
+.material-symbols-outlined {
+  font-size: 43px;
+  font-weight: 100;
+}
+
+.deleteIcon {
+  font-size: 15px;
+  display: inline-block;
+  border-radius: 50%;
+  padding: 3px;
+  background-color: white;
+  color: #232348;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 800,
+    "opsz" 20;
+  margin: 0px 25px;
+}
+
+.detailsIcon {
+  font-size: 17px;
+  font-weight: 10;
+}
+
+p {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.transactionDescription {
+  width: 250px;
+}
+
+.expenseForm {
+  margin-top: 50px;
 }

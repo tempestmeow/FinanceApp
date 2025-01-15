@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+
 import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 import { Line } from "react-chartjs-2";
@@ -306,23 +307,42 @@ function App() {
                   <div className="expenseLists">
                     {expenseTransactionSet.map((transaction, index) => (
                       <div key={index} className="expenseCard">
-                        <BtcIcon />
-                        <p>{transaction.name}</p>
-                        <p>${transaction.amount}</p>
-                        <p>{transaction.date}</p>
-                        <p>{transaction.description}</p>
-                        <button
-                          className="deleteButton"
+                        <span class="material-symbols-outlined">savings</span>
+                        <div className="circle"></div>
+                        <p className="transactionName">{transaction.name}</p>
+                        <div className="transactionDetails">
+                          <p className="transactionAmount">
+                            <span className="details">
+                              ${transaction.amount}
+                            </span>
+                          </p>
+                          <p className="transactionDate">
+                            <span className="material-symbols-outlined detailsIcon">
+                              calendar_month
+                            </span>
+                            <span className="details">{transaction.date}</span>
+                          </p>
+                          <p className="transactionDescription">
+                            <span className="material-symbols-outlined detailsIcon">
+                              description
+                            </span>
+                            <span className="details">
+                              {transaction.description}
+                            </span>
+                          </p>
+                        </div>
+                        <span
+                          className="material-symbols-outlined deleteIcon detailsIcon"
                           onClick={() => handleDelete(index, "expense")}
                         >
-                          Delete
-                        </button>
+                          delete
+                        </span>
                       </div>
                     ))}
                   </div>
                   <div className="totalExpenses"></div>
                   <div className="expenseGraph">
-                    <Doughnut data={expenseData} />
+                    {/* <Doughnut data={expenseData} /> */}
                   </div>
                 </div>
               </div>
