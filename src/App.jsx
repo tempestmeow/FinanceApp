@@ -5,9 +5,11 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import BtcIcon from "./components/btc.jsx";
 import {
   Chart as ChartJS,
+  BarElement,
   ArcElement,
   LineElement,
   CategoryScale,
@@ -20,8 +22,10 @@ import {
 
 ChartJS.register(
   ArcElement,
+
   LineElement,
   CategoryScale,
+  BarElement,
   LinearScale,
   PointElement,
   Title,
@@ -125,29 +129,38 @@ function App() {
     }
   };
 
-  function getBalance() {
-    return totalIncome - totalExpenses;
-  }
-
   const incomeData = {
     labels: incomeTransactionSet.map((transaction) => transaction.name),
     datasets: [
       {
         data: incomeTransactionSet.map((transaction) => transaction.amount),
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#6ce5e8",
+          "#41b8d5",
+          "#2d8bba",
+          "#2f5f98",
+          "#31356e",
         ],
         hoverBackgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#6ce5e8",
+          "#41b8d5",
+          "#2d8bba",
+          "#2f5f98",
+          "#31356e",
         ],
+        borderColor: "#000",
+        borderWidth: 0.3,
+        hoverBorderColor: "#000",
+        hoverBorderWidth: 2,
+        offset: 0,
+        spacing: 0,
+        weight: 1,
+        animation: {
+          duration: 1000,
+        },
       },
     ],
   };
-
   const expenseData = {
     labels: expenseTransactionSet.map((transaction) => transaction.name),
     datasets: [
@@ -177,6 +190,16 @@ function App() {
         animation: {
           duration: 1000,
         },
+      },
+    ],
+  };
+
+  const balanceData = {
+    labels: ["Income", "Expense"],
+    datasets: [
+      {
+        data: [totalIncome, totalExpenses],
+        backgroundColor: ["#ffde59", "#41d5d1"],
       },
     ],
   };
@@ -381,11 +404,135 @@ function App() {
             </>
           )}
 
-          {view === "dashboard" && <div>dashboard</div>}
-          <div className="balance" onClick={() => console.log(getBalance())}>
-            {/* Balance: {balance} PHP{" "} */}
-          </div>
-          <div className="lineGraph"></div>
+          {view === "income" && (
+            <>
+              <div className="expenseForm">
+                <div className="formDiv">
+                  <div className="formTitle">Income</div>
+                  <form
+                    className="addExpense"
+                    onSubmit={(e) => handleSubmit(e, "income")}
+                  >
+                    <div className="formValue">
+                      Total Income:{" "}
+                      <span className="formPrice">${totalIncome}</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Title"
+                      name="name"
+                      onChange={(e) => handleChange(e, "income")}
+                      value={incomeTransactions.name}
+                      autoComplete="off"
+                    ></input>
+                    <input
+                      type="number"
+                      placeholder="Amount"
+                      name="amount"
+                      onChange={(e) => handleChange(e, "expense")}
+                      value={incomeTransactions.amount}
+                    ></input>
+                    <input
+                      type="date"
+                      placeholder="Date"
+                      name="date"
+                      onChange={(e) => handleChange(e, "expense")}
+                      value={incomeTransactions.date}
+                    ></input>
+                    <select className="selectCategory" placeholder="category">
+                      <option value="food">Food</option>
+                      <option value="grocery">Grocery</option>
+                      <option value="bills">Bills</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Description"
+                      name="description"
+                      onChange={(e) => handleChange(e, "expense")}
+                      value={incomeTransactions.description}
+                    ></input>
+                    <button type="submit" className="submitBtn">
+                      + Add Expense
+                    </button>
+                  </form>
+                </div>
+                <div className="expenses">
+                  <div className="expenseTransactions">
+                    <p className="transactionHeader">Income Transactions</p>
+                    <div className="expenseLists">
+                      {incomeTransactionSet.map((transaction, index) => (
+                        <div key={index} className="expenseCard">
+                          <span class="material-symbols-outlined">savings</span>
+                          <div className="circle"></div>
+                          <p className="transactionName">{transaction.name}</p>
+                          <div className="transactionDetails">
+                            <p className="transactionAmount">
+                              <span className="details">
+                                ${transaction.amount}
+                              </span>
+                            </p>
+                            <p className="transactionDate">
+                              <span className="material-symbols-outlined detailsIcon">
+                                calendar_month
+                              </span>
+                              <span className="details">
+                                {transaction.date}
+                              </span>
+                            </p>
+                            <p className="transactionDescription">
+                              <span className="material-symbols-outlined detailsIcon">
+                                description
+                              </span>
+                              <span className="details">
+                                {transaction.description}
+                              </span>
+                            </p>
+                          </div>
+                          <span
+                            className="material-symbols-outlined deleteIcon detailsIcon"
+                            onClick={() => handleDelete(index, "income")}
+                          >
+                            delete
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="expenseGraph">
+                    <Doughnut
+                      data={incomeData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: {
+                            onClick: (e) => e.stopPropagation(),
+                            labels: {
+                              color: "white",
+                            },
+                          },
+                        },
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {view === "dashboard" && (
+            <>
+              <div className="dashboardLeft">
+                <div className="myBalance">
+                  <div className="myBalanceTitle">My Balance: {balance}</div>
+                  <div className="myBalanceGraph">
+                    <Bar data={balanceData} options={{ indexAxis: "y" }} />
+                  </div>
+                </div>
+              </div>
+              <div className="dashboardRight"></div>
+            </>
+          )}
         </div>
       </div>
     </>
