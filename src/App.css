@@ -207,6 +207,7 @@ option {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: 400px;
 }
 
 .transactionHeader {
@@ -314,4 +315,137 @@ p {
 
 .expenseForm {
   margin-top: 50px;
+}
+
+.expenseGraph {
+  width: 100%;
+  background-color: #232348;
+  height: 380px;
+  padding: 30px;
+  border-radius: 50px;
+}
+
+.expenses {
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  gap: 10px;
+}
+
+/* Same layout for income section as expense */
+.incomeForm {
+  display: flex;
+  gap: 50px;
+}
+
+.addIncome {
+  display: flex;
+  flex-direction: column;
+}
+
+.incomeTransactions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transactionHeader {
+  font-size: 2.3rem;
+  font-family: "Host Grotesk", serif;
+  font-weight: 600;
+}
+
+.incomeLists {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 330px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.incomeLists::-webkit-scrollbar {
+  width: 7px;
+}
+
+.incomeLists::-webkit-scrollbar-track {
+  background: #313030;
+  border-radius: 30px;
+}
+
+.incomeLists::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #d42aff, #e696ea);
+  height: 90px;
+  border-radius: 30px;
+}
+
+.incomeLists::-webkit-scrollbar-thumb:hover {
+  background: #232348;
+}
+
+.incomeCard {
+  display: flex;
+  gap: 20px;
+  font-size: 1.1rem;
+  font-family: "Roboto", serif;
+  background-color: #232348;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  padding: 10px 30px;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  background-color: #6ce5e8;
+  border-radius: 50%;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.transactionName {
+  font-size: 1.3rem;
+}
+
+.transactionDetails {
+  font-size: 1rem;
+  font-weight: 300;
+  gap: 30px;
+  margin-left: 20px;
+  margin-top: 3px;
+  align-items: center;
+}
+
+.material-symbols-outlined {
+  font-size: 43px;
+  font-weight: 100;
+}
+
+.deleteIcon {
+  font-size: 15px;
+  display: inline-block;
+  border-radius: 50%;
+  padding: 3px;
+  background-color: white;
+  color: #232348;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 800,
+    "opsz" 20;
+  margin: 0px 25px;
+}
+
+.detailsIcon {
+  font-size: 17px;
+  font-weight: 10;
+}
+
+.incomeGraph {
+  width: 100%;
+  background-color: #232348;
+  height: 380px;
+  padding: 30px;
+  border-radius: 50px;
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -153,15 +154,29 @@ function App() {
       {
         data: expenseTransactionSet.map((transaction) => transaction.amount),
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#6ce5e8",
+          "#41b8d5",
+          "#2d8bba",
+          "#2f5f98",
+          "#31356e",
         ],
         hoverBackgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "#6ce5e8",
+          "#41b8d5",
+          "#2d8bba",
+          "#2f5f98",
+          "#31356e",
         ],
+        borderColor: "#000",
+        borderWidth: 0.3,
+        hoverBorderColor: "#000",
+        hoverBorderWidth: 2,
+        offset: 0,
+        spacing: 0,
+        weight: 1,
+        animation: {
+          duration: 1000,
+        },
       },
     ],
   };
@@ -302,12 +317,129 @@ function App() {
                     </button>
                   </form>
                 </div>
-                <div className="expenseTransactions">
-                  <p className="transactionHeader">Expense Transactions</p>
-                  <div className="expenseLists">
-                    {expenseTransactionSet.map((transaction, index) => (
-                      <div key={index} className="expenseCard">
-                        <span class="material-symbols-outlined">savings</span>
+                <div className="expenses">
+                  <div className="expenseTransactions">
+                    <p className="transactionHeader">Expense Transactions</p>
+                    <div className="expenseLists">
+                      {expenseTransactionSet.map((transaction, index) => (
+                        <div key={index} className="expenseCard">
+                          <span class="material-symbols-outlined">savings</span>
+                          <div className="circle"></div>
+                          <p className="transactionName">{transaction.name}</p>
+                          <div className="transactionDetails">
+                            <p className="transactionAmount">
+                              <span className="details">
+                                ${transaction.amount}
+                              </span>
+                            </p>
+                            <p className="transactionDate">
+                              <span className="material-symbols-outlined detailsIcon">
+                                calendar_month
+                              </span>
+                              <span className="details">
+                                {transaction.date}
+                              </span>
+                            </p>
+                            <p className="transactionDescription">
+                              <span className="material-symbols-outlined detailsIcon">
+                                description
+                              </span>
+                              <span className="details">
+                                {transaction.description}
+                              </span>
+                            </p>
+                          </div>
+                          <span
+                            className="material-symbols-outlined deleteIcon detailsIcon"
+                            onClick={() => handleDelete(index, "expense")}
+                          >
+                            delete
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="expenseGraph">
+                    <Doughnut
+                      data={expenseData}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                          legend: {
+                            onClick: (e) => e.stopPropagation(),
+                            labels: {
+                              color: "white",
+                            },
+                          },
+                        },
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+          {view === "income" && (
+            <>
+              <div className="incomeForm">
+                <div className="formDiv">
+                  <div className="formTitle">Income</div>
+                  <form
+                    className="addIncome"
+                    onSubmit={(e) => handleSubmit(e, "income")}
+                  >
+                    <div className="formValue">
+                      Total Income:{" "}
+                      <span className="formPrice">${totalIncome}</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Title"
+                      name="name"
+                      onChange={(e) => handleChange(e, "income")}
+                      value={incomeTransactions.name}
+                      autoComplete="off"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Amount"
+                      name="amount"
+                      onChange={(e) => handleChange(e, "income")}
+                      value={incomeTransactions.amount}
+                    />
+                    <input
+                      type="date"
+                      placeholder="Date"
+                      name="date"
+                      onChange={(e) => handleChange(e, "income")}
+                      value={incomeTransactions.date}
+                    />
+                    <select className="selectCategory" placeholder="Category">
+                      <option value="salary">Salary</option>
+                      <option value="bonus">Bonus</option>
+                      <option value="others">Others</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Description"
+                      name="description"
+                      onChange={(e) => handleChange(e, "income")}
+                      value={incomeTransactions.description}
+                    />
+                    <button type="submit" className="submitBtn">
+                      + Add Income
+                    </button>
+                  </form>
+                </div>
+                <div className="incomeTransactions">
+                  <p className="transactionHeader">Income Transactions</p>
+                  <div className="incomeLists">
+                    {incomeTransactionSet.map((transaction, index) => (
+                      <div key={index} className="incomeCard">
+                        <span className="material-symbols-outlined">
+                          account_balance_wallet
+                        </span>
                         <div className="circle"></div>
                         <p className="transactionName">{transaction.name}</p>
                         <div className="transactionDetails">
@@ -333,86 +465,21 @@ function App() {
                         </div>
                         <span
                           className="material-symbols-outlined deleteIcon detailsIcon"
-                          onClick={() => handleDelete(index, "expense")}
+                          onClick={() => handleDelete(index, "income")}
                         >
                           delete
                         </span>
                       </div>
                     ))}
                   </div>
-                  <div className="totalExpenses"></div>
-                  <div className="expenseGraph">
-                    {/* <Doughnut data={expenseData} /> */}
-                  </div>
                 </div>
-              </div>
-            </>
-          )}
-          {view === "income" && (
-            <>
-              <div className="income">
-                <form
-                  className="addIncome"
-                  onSubmit={(e) => handleSubmit(e, "income")}
-                >
-                  <input
-                    type="text"
-                    placeholder="name"
-                    name="name"
-                    onChange={(e) => handleChange(e, "income")}
-                    value={incomeTransactions.name}
-                  ></input>
-                  <input
-                    type="number"
-                    placeholder="amount"
-                    name="amount"
-                    onChange={(e) => handleChange(e, "income")}
-                    value={incomeTransactions.amount}
-                  ></input>
-                  <input
-                    type="date"
-                    placeholder="date"
-                    name="date"
-                    onChange={(e) => handleChange(e, "income")}
-                    value={incomeTransactions.date}
-                  ></input>
-                  <input
-                    type="text"
-                    placeholder="description"
-                    name="description"
-                    onChange={(e) => handleChange(e, "income")}
-                    value={incomeTransactions.description}
-                  ></input>
-                  <button type="submit">Submit</button>
-                </form>
-                <div className="incomeList">
-                  {incomeTransactionSet.map((transaction, index) => (
-                    <div key={index} className="incomeList">
-                      <div className="transactionTitle">{transaction.name}</div>
-                      <div className="transactionDetails">
-                        <p>{transaction.amount}</p>
-                        <p>{transaction.date}</p>
-                        <p>{transaction.description}</p>
-                        <button
-                          className="deleteButton"
-                          onClick={() => handleDelete(index, "income")}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="totalIncomes">
-                  Total Income: {totalIncome} PHP
-                </div>
-                <div className="incomeGraph">income</div>
                 <div className="incomeGraph">
                   <Doughnut data={incomeData} />
                 </div>
               </div>
             </>
           )}
+
           {view === "dashboard" && <div>dashboard</div>}
           <div className="balance" onClick={() => console.log(getBalance())}>
             {/* Balance: {balance} PHP{" "} */}
