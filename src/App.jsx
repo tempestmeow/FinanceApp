@@ -200,6 +200,8 @@ function App() {
       {
         data: [totalIncome, totalExpenses],
         backgroundColor: ["#ffde59", "#41d5d1"],
+        borderRadius: 7,
+        label: null,
       },
     ],
   };
@@ -284,6 +286,15 @@ function App() {
             }}
           >
             Income
+          </button>
+          <button
+            className={toggleButtonClass(4)}
+            onClick={() => {
+              setView("goals");
+              handleButtonClick(4);
+            }}
+          >
+            Add Goals
           </button>
           <div></div>
         </div>
@@ -524,11 +535,54 @@ function App() {
             <>
               <div className="dashboardLeft">
                 <div className="myBalance">
-                  <div className="myBalanceTitle">My Balance: {balance}</div>
-                  <div className="myBalanceGraph">
-                    <Bar data={balanceData} options={{ indexAxis: "y" }} />
+                  <div className="myBalanceTitle">My Balance</div>
+                  <div className="myBalanceValues">
+                    <div className="myBalanceValue">${balance}</div>
+                    <div className="myBalanceGraph">
+                      <Bar
+                        data={balanceData}
+                        options={{
+                          indexAxis: "y",
+                          plugins: {
+                            legend: {
+                              display: false,
+                            },
+                          },
+                          scales: {
+                            x: {
+                              ticks: {
+                                font: {
+                                  size: 12,
+                                  family: "Roboto",
+                                  weight: 200,
+                                },
+                                color: "white",
+                              },
+                              grid: {
+                                display: false,
+                                drawBorder: false,
+                              },
+                            },
+                            y: {
+                              ticks: {
+                                font: {
+                                  size: 12,
+                                  family: "Roboto",
+                                  weight: 300,
+                                },
+                                color: "white",
+                              },
+                              grid: {
+                                display: false,
+                                drawBorder: false,
+                              },
+                            },
+                          },
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
+                </div>{" "}
               </div>
               <div className="dashboardRight"></div>
             </>

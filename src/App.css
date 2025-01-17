@@ -331,3 +331,30 @@ p {
   width: 900px;
   gap: 10px;
 }
+
+.myBalanceValues {
+  background-color: #232348;
+  border-radius: 30px;
+  font-family: "Host Grotesk", serif;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 5px 30px;
+  width: 650px;
+}
+
+.myBalanceValue {
+  font-size: 3.4rem;
+  padding-left: 30px;
+}
+
+.myBalanceTitle {
+  font-size: 2.3rem;
+  font-family: "Host Grotesk", serif;
+  font-weight: 600;
+}
+
+.myBalanceGraph {
+  height: 150px;
+  width: auto;
+}
