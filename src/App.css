@@ -372,3 +372,20 @@ p {
   margin-left: 20px;
   padding: 10px 0px;
 }
+
+.cashFlowTitle {
+  font-size: 2.3rem;
+  font-family: "Host Grotesk", serif;
+  font-weight: 600;
+}
+
+.cashflow {
+  background-color: #232348;
+  border-radius: 50px;
+  font-family: "Host Grotesk", serif;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 5px 30px;
+  width: 650px;
+}

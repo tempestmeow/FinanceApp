@@ -43,11 +43,6 @@ function App() {
     quarter: 1,
   });
 
-  const [q1Total, setq1Total] = useState(0);
-  const [q2Total, setq2Total] = useState(0);
-  const [q3Total, setq3Total] = useState(0);
-  const [q4Total, setq4Total] = useState(0);
-
   const [balance, setBalance] = useState(0);
 
   const [incomeTransactions, setIncomeTransactions] = useState({
@@ -114,13 +109,10 @@ function App() {
 
   useEffect(() => {
     console.log(incomeTransactionSet.map((transaction) => transaction.date));
-
-    setq1Total(
-      incomeTransactionSet
-        .filter((transaction) => transaction.quarter === 1)
-        .map((transaction) => transaction.amount)
-        .reduce((acm, crv) => acm + crv, 0)
-    );
+    console.log(incomeTransactionSet.map((transaction) => transaction.quarter));
+    // console.log(
+    //   incomeTransactionSet.filter((transaction) => transaction.quarter === 2)
+    // );
   }, [incomeTransactionSet]);
 
   useEffect(() => {
@@ -195,14 +187,54 @@ function App() {
     datasets: [
       {
         label: "Income",
-        data: [q1Total, , 18000, 20000, 22000],
+        data: [
+          incomeTransactionSet
+            .filter((transaction) => transaction.quarter === 1)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+
+          incomeTransactionSet
+            .filter((transaction) => transaction.quarter === 2)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+
+          incomeTransactionSet
+            .filter((transaction) => transaction.quarter === 3)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+
+          incomeTransactionSet
+            .filter((transaction) => transaction.quarter === 4)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+        ],
         backgroundColor: "#ffde59",
         borderColor: "#f1c40f",
         borderWidth: 1,
       },
       {
         label: "Expense",
-        data: [8000, 9000, 9500, 11000],
+        data: [
+          expenseTransactionSet
+            .filter((transaction) => transaction.quarter === 1)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+
+          expenseTransactionSet
+            .filter((transaction) => transaction.quarter === 2)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+
+          expenseTransactionSet
+            .filter((transaction) => transaction.quarter === 3)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+
+          expenseTransactionSet
+            .filter((transaction) => transaction.quarter === 4)
+            .map((transaction) => transaction.amount)
+            .reduce((acm, crv) => acm + crv, 0),
+        ],
         backgroundColor: "#41d5d1",
         borderColor: "#1abc9c",
         borderWidth: 1,
@@ -282,7 +314,6 @@ function App() {
         data: [totalIncome, totalExpenses],
         backgroundColor: ["#ffde59", "#41d5d1"],
         borderRadius: 7,
-        label: null,
       },
     ],
   };
@@ -664,7 +695,11 @@ function App() {
                     </div>
                   </div>
                 </div>
-                <Bar data={quarterBalanceData} />
+                <div className="cashFlowTitle">Cashflow</div>
+                <div className="cashflow">
+                  <div className="quarterBalanceGraph"></div>
+                  <Bar data={quarterBalanceData} />
+                </div>
               </div>
 
               <div className="dashboardRight"></div>
