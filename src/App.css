@@ -334,7 +334,7 @@ p {
 
 .myBalanceValues {
   background-color: #232348;
-  border-radius: 30px;
+  border-radius: 50px;
   font-family: "Host Grotesk", serif;
   display: flex;
   flex-direction: column;
@@ -346,6 +346,8 @@ p {
 .myBalanceValue {
   font-size: 3.4rem;
   padding-left: 30px;
+  font-weight: 800;
+  padding-top: 20px;
 }
 
 .myBalanceTitle {
@@ -354,7 +356,19 @@ p {
   font-weight: 600;
 }
 
+.myBalance {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .myBalanceGraph {
   height: 150px;
   width: auto;
+}
+
+.dashboardLeft {
+  margin-top: 50px;
+  margin-left: 20px;
+  padding: 10px 0px;
 }

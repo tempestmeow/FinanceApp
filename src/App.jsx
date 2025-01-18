@@ -40,40 +40,92 @@ function App() {
     amount: 2000,
     date: new Date().toISOString().substring(0, 10),
     description: "Groceries",
+    quarter: 1,
   });
+
+  const [q1Total, setq1Total] = useState(0);
+  const [q2Total, setq2Total] = useState(0);
+  const [q3Total, setq3Total] = useState(0);
+  const [q4Total, setq4Total] = useState(0);
 
   const [balance, setBalance] = useState(0);
-
-  useEffect(() => {
-    setBalance(totalIncome - totalExpenses);
-  });
 
   const [incomeTransactions, setIncomeTransactions] = useState({
     name: "Sweldo",
     amount: 5000,
     date: new Date().toISOString().substring(0, 10),
     description: "Digima Salary",
+    quarter: 1,
   });
   const [incomeTransactionSet, setIncomeTransactionsSet] = useState([]);
 
   const [view, setView] = useState("expense");
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
+  let [quarter, setQuarter] = useState(1);
+
   const handleChange = (e, transaction) => {
     const { name, value } = e.target;
 
-    if (transaction === "expense") {
-      setExpenseTransactions({
-        ...expenseTransactions,
-        [name]: value,
-      });
-    } else if (transaction === "income") {
-      setIncomeTransactions({
-        ...incomeTransactions,
-        [name]: value,
-      });
+    if (name === "date") {
+      let splitDate = value.split("-");
+
+      let month = parseInt(splitDate[1], 10);
+
+      const calculatedQuarter = Math.ceil(month / 3);
+      setQuarter(calculatedQuarter);
+      if (transaction === "expense") {
+        setExpenseTransactions({
+          ...expenseTransactions,
+          [name]: value,
+          quarter: calculatedQuarter,
+        });
+      } else if (transaction === "income") {
+        setIncomeTransactions({
+          ...incomeTransactions,
+          [name]: value,
+          quarter: calculatedQuarter,
+        });
+      }
+    } else {
+      if (transaction === "expense") {
+        setExpenseTransactions({
+          ...expenseTransactions,
+          [name]: value,
+          quarter: quarter,
+        });
+      } else if (transaction === "income") {
+        setIncomeTransactions({
+          ...incomeTransactions,
+          [name]: value,
+          quarter: quarter,
+        });
+      }
     }
   };
+
+  useEffect(() => {
+    setBalance(totalIncome - totalExpenses);
+  }, [totalIncome, totalExpenses]);
+
+  useEffect(() => {
+    console.log(expenseTransactionSet.map((transaction) => transaction.date));
+  }, [expenseTransactionSet]);
+
+  useEffect(() => {
+    console.log(incomeTransactionSet.map((transaction) => transaction.date));
+
+    setq1Total(
+      incomeTransactionSet
+        .filter((transaction) => transaction.quarter === 1)
+        .map((transaction) => transaction.amount)
+        .reduce((acm, crv) => acm + crv, 0)
+    );
+  }, [incomeTransactionSet]);
+
+  useEffect(() => {
+    console.log(incomeTransactionSet.map((transaction) => transaction.quarter));
+  }, [incomeTransactionSet]);
 
   useEffect(() => {
     let sum = 0;
@@ -93,6 +145,7 @@ function App() {
 
   const handleSubmit = (e, expense) => {
     e.preventDefault();
+
     if (expense === "expense") {
       setExpenseTransactionsSet([
         ...expenseTransactionSet,
@@ -103,14 +156,22 @@ function App() {
         amount: 2000,
         date: new Date().toISOString().substring(0, 10),
         description: "Grocery",
+        quarter: quarter,
       });
     } else if (expense === "income") {
+      let splitDate = incomeTransactions.date.split("-");
+
+      let month = parseInt(splitDate[1], 10);
+
+      setQuarter(Math.ceil(month / 3));
+
       setIncomeTransactionsSet([...incomeTransactionSet, incomeTransactions]);
       setIncomeTransactions({
-        name: "Sweldo",
-        amount: 5000,
-        date: new Date().toISOString().substring(0, 10),
-        description: "Digima Salary",
+        name: incomeTransactions.name,
+        amount: incomeTransactions.amount,
+        date: incomeTransactions.date,
+        description: incomeTransactions.description,
+        quarter: quarter,
       });
     }
   };
@@ -127,6 +188,26 @@ function App() {
       );
       setExpenseTransactionsSet(transactionsLeft);
     }
+  };
+
+  const quarterBalanceData = {
+    labels: ["Q1", "Q2", "Q3", "Q4"],
+    datasets: [
+      {
+        label: "Income",
+        data: [q1Total, , 18000, 20000, 22000],
+        backgroundColor: "#ffde59",
+        borderColor: "#f1c40f",
+        borderWidth: 1,
+      },
+      {
+        label: "Expense",
+        data: [8000, 9000, 9500, 11000],
+        backgroundColor: "#41d5d1",
+        borderColor: "#1abc9c",
+        borderWidth: 1,
+      },
+    ],
   };
 
   const incomeData = {
@@ -440,14 +521,14 @@ function App() {
                       type="number"
                       placeholder="Amount"
                       name="amount"
-                      onChange={(e) => handleChange(e, "expense")}
+                      onChange={(e) => handleChange(e, "income")}
                       value={incomeTransactions.amount}
                     ></input>
                     <input
                       type="date"
                       placeholder="Date"
                       name="date"
-                      onChange={(e) => handleChange(e, "expense")}
+                      onChange={(e) => handleChange(e, "income")}
                       value={incomeTransactions.date}
                     ></input>
                     <select className="selectCategory" placeholder="category">
@@ -582,8 +663,10 @@ function App() {
                       />
                     </div>
                   </div>
-                </div>{" "}
+                </div>
+                <Bar data={quarterBalanceData} />
               </div>
+
               <div className="dashboardRight"></div>
             </>
           )}
