@@ -742,11 +742,21 @@ function App() {
 
               <div className="dashboardRight">
                 <div className="recentTransactions">
-                  {totalTransactions.map((transaction, index) => (
-                    <div className={transaction.className} key={index}>
-                      <p>{transaction.amount}</p>
-                    </div>
-                  ))}
+                  <div className="myBalanceTitle">Recent Transactions</div>
+                  <div className="recentTransactionList">
+                    {totalTransactions.map((transaction, index) => (
+                      <div className={transaction.className} key={index}>
+                        <div className="recentCard">
+                          <span className="recentName">{transaction.name}</span>
+                          <span className="recentAmount">
+                            {transaction.type === "expense"
+                              ? `- ${transaction.amount}`
+                              : `+ ${transaction.amount}`}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </>

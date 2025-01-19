@@ -377,6 +377,8 @@ p {
   font-size: 2.3rem;
   font-family: "Host Grotesk", serif;
   font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .cashflow {
@@ -391,9 +393,46 @@ p {
 }
 
 .recentExpenseCard {
-  color: red;
+  color: #ff1313;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: "Roboto", serif;
 }
 
 .recentIncomeCard {
-  color: green;
+  color: #07ff2f;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Roboto", serif;
+}
+
+.recentTransactionList {
+  display: flex;
+  width: 550px;
+  max-height: 240px;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  align-items: center;
+}
+
+.recentCard {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  background-color: #232348;
+  padding: 15px 20px;
+  border-radius: 30px;
+}
+
+.dashboardRight {
+  margin-top: 50px;
+  margin-left: 20px;
+  padding: 10px 0px;
+}
+
+.recentAmount {
+  font-weight: 700;
 }
