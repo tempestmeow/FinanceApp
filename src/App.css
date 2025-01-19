@@ -389,3 +389,11 @@ p {
   padding: 5px 30px;
   width: 650px;
 }
+
+.recentExpenseCard {
+  color: red;
+}
+
+.recentIncomeCard {
+  color: green;
+}

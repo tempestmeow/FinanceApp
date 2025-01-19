@@ -41,7 +41,10 @@ function App() {
     date: new Date().toISOString().substring(0, 10),
     description: "Groceries",
     quarter: 1,
+    type: "expense",
   });
+
+  const [totalTransactions, setTotalTransactions] = useState([]);
 
   const [balance, setBalance] = useState(0);
 
@@ -51,6 +54,7 @@ function App() {
     date: new Date().toISOString().substring(0, 10),
     description: "Digima Salary",
     quarter: 1,
+    type: "expense",
   });
   const [incomeTransactionSet, setIncomeTransactionsSet] = useState([]);
 
@@ -74,12 +78,14 @@ function App() {
           ...expenseTransactions,
           [name]: value,
           quarter: calculatedQuarter,
+          type: "expense",
         });
       } else if (transaction === "income") {
         setIncomeTransactions({
           ...incomeTransactions,
           [name]: value,
           quarter: calculatedQuarter,
+          type: "income",
         });
       }
     } else {
@@ -88,12 +94,14 @@ function App() {
           ...expenseTransactions,
           [name]: value,
           quarter: quarter,
+          type: "expense",
         });
       } else if (transaction === "income") {
         setIncomeTransactions({
           ...incomeTransactions,
           [name]: value,
           quarter: quarter,
+          type: "income",
         });
       }
     }
@@ -103,26 +111,26 @@ function App() {
     setBalance(totalIncome - totalExpenses);
   }, [totalIncome, totalExpenses]);
 
-  useEffect(() => {
-    console.log(expenseTransactionSet.map((transaction) => transaction.date));
-  }, [expenseTransactionSet]);
+  // useEffect(() => {
+  //   console.log(expenseTransactionSet.map((transaction) => transaction.type));
+  // }, [expenseTransactionSet]);
 
-  useEffect(() => {
-    console.log(incomeTransactionSet.map((transaction) => transaction.date));
-    console.log(incomeTransactionSet.map((transaction) => transaction.quarter));
-    // console.log(
-    //   incomeTransactionSet.filter((transaction) => transaction.quarter === 2)
-    // );
-  }, [incomeTransactionSet]);
+  // useEffect(() => {
+  //   console.log(incomeTransactionSet.map((transaction) => transaction.date));
+  //   console.log(incomeTransactionSet.map((transaction) => transaction.quarter));
+  // console.log(
+  //   incomeTransactionSet.filter((transaction) => transaction.quarter === 2)
+  // );
+  // }, [incomeTransactionSet]);
 
-  useEffect(() => {
-    console.log(incomeTransactionSet.map((transaction) => transaction.quarter));
-  }, [incomeTransactionSet]);
+  // useEffect(() => {
+  //   console.log(incomeTransactionSet.map((transaction) => transaction.type));
+  // }, [incomeTransactionSet]);
 
   useEffect(() => {
     let sum = 0;
     for (let i = 0; i < expenseTransactionSet.length; i++) {
-      sum += expenseTransactionSet[i].amount;
+      sum += parseFloat(expenseTransactionSet[i].amount);
     }
     setTotalExpenses(sum);
   }, [expenseTransactionSet]);
@@ -130,10 +138,34 @@ function App() {
   useEffect(() => {
     let sum = 0;
     for (let i = 0; i < incomeTransactionSet.length; i++) {
-      sum += incomeTransactionSet[i].amount;
+      sum += parseFloat(incomeTransactionSet[i].amount);
     }
     setTotalIncome(sum);
   }, [incomeTransactionSet]);
+
+  useEffect(() => {
+    if (expenseTransactionSet.length > 0) {
+      setTotalTransactions((prevTotalTransactions) => [
+        ...prevTotalTransactions,
+        { ...expenseTransactions, className: "recentExpenseCard" },
+      ]);
+    }
+  }, [expenseTransactionSet]);
+
+  useEffect(() => {
+    if (incomeTransactionSet.length > 0) {
+      setTotalTransactions((prevTotalTransactions) => [
+        ...prevTotalTransactions,
+        { ...incomeTransactions, className: "recentIncomeCard" },
+      ]);
+    }
+  }, [incomeTransactionSet]);
+
+  useEffect(() => {
+    if (totalTransactions.length > 0) {
+      console.log(totalTransactions);
+    }
+  }, [totalTransactions]);
 
   const handleSubmit = (e, expense) => {
     e.preventDefault();
@@ -149,6 +181,7 @@ function App() {
         date: new Date().toISOString().substring(0, 10),
         description: "Grocery",
         quarter: quarter,
+        type: "expense",
       });
     } else if (expense === "income") {
       let splitDate = incomeTransactions.date.split("-");
@@ -164,6 +197,7 @@ function App() {
         date: incomeTransactions.date,
         description: incomeTransactions.description,
         quarter: quarter,
+        type: "income",
       });
     }
   };
@@ -469,7 +503,9 @@ function App() {
                     <div className="expenseLists">
                       {expenseTransactionSet.map((transaction, index) => (
                         <div key={index} className="expenseCard">
-                          <span class="material-symbols-outlined">savings</span>
+                          <span className="material-symbols-outlined">
+                            savings
+                          </span>
                           <div className="circle"></div>
                           <p className="transactionName">{transaction.name}</p>
                           <div className="transactionDetails">
@@ -585,7 +621,9 @@ function App() {
                     <div className="expenseLists">
                       {incomeTransactionSet.map((transaction, index) => (
                         <div key={index} className="expenseCard">
-                          <span class="material-symbols-outlined">savings</span>
+                          <span className="material-symbols-outlined">
+                            savings
+                          </span>
                           <div className="circle"></div>
                           <p className="transactionName">{transaction.name}</p>
                           <div className="transactionDetails">
@@ -702,7 +740,15 @@ function App() {
                 </div>
               </div>
 
-              <div className="dashboardRight"></div>
+              <div className="dashboardRight">
+                <div className="recentTransactions">
+                  {totalTransactions.map((transaction, index) => (
+                    <div className={transaction.className} key={index}>
+                      <p>{transaction.amount}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </>
           )}
         </div>
