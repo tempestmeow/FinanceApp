@@ -744,18 +744,32 @@ function App() {
                 <div className="recentTransactions">
                   <div className="myBalanceTitle">Recent Transactions</div>
                   <div className="recentTransactionList">
-                    {totalTransactions.map((transaction, index) => (
-                      <div className={transaction.className} key={index}>
-                        <div className="recentCard">
-                          <span className="recentName">{transaction.name}</span>
-                          <span className="recentAmount">
-                            {transaction.type === "expense"
-                              ? `- ${transaction.amount}`
-                              : `+ ${transaction.amount}`}
-                          </span>
+                    {totalTransactions
+                      .slice()
+                      .reverse()
+                      .map((transaction, index) => (
+                        <div className={transaction.className} key={index}>
+                          <div className="recentCard">
+                            <span className="recentName">
+                              {transaction.name}
+                            </span>
+                            <span className="recentAmount">
+                              {transaction.type === "expense"
+                                ? `- ${transaction.amount}`
+                                : `+ ${transaction.amount}`}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                  </div>
+                </div>
+                <div className="financeGoals">
+                  <div className="myBalanceTitle">Finance Goals</div>
+                  <div className="goalForm">
+                    <form>
+                      <input type="text"></input>
+                      <button type="submit"></button>
+                    </form>
                   </div>
                 </div>
               </div>
