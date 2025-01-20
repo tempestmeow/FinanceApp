@@ -62,6 +62,10 @@ function App() {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   let [quarter, setQuarter] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const openPopup = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleChange = (e, transaction) => {
     const { name, value } = e.target;
@@ -765,12 +769,28 @@ function App() {
                 </div>
                 <div className="financeGoals">
                   <div className="myBalanceTitle">Finance Goals</div>
-                  <div className="goalForm">
-                    <form>
-                      <input type="text"></input>
-                      <button type="submit"></button>
-                    </form>
-                  </div>
+                  <button onClick={openPopup}></button>
+                  <div className="goals"></div>
+                  {isOpen && (
+                    <div className="goalForm popup">
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          console.log("lmao");
+                        }}
+                        className="goalForm"
+                      >
+                        <p>
+                          <label className="goalLabel">Goal:</label>
+                          <input type="text" placeholder="Save 500$"></input>
+                        </p>
+
+                        <button type="submit" className="submitGoalBtn">
+                          + Add Expense
+                        </button>
+                      </form>
+                    </div>
+                  )}
                 </div>
               </div>
             </>
