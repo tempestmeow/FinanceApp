@@ -466,3 +466,15 @@ p {
   border-radius: 30px;
   width: 250px;
 }
+
+.addGoalBtn {
+  background-color: #00bf5e;
+  color: white;
+  border: none;
+  outline: none;
+  font-family: "Host Grotesk", serif;
+  font-weight: 700;
+  font-size: 1.03rem;
+  padding: 10px 20px;
+  border-radius: 30px;
+}

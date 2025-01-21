@@ -44,6 +44,17 @@ function App() {
     type: "expense",
   });
 
+  const [goal, setGoal] = useState({
+    name: "Save $500",
+    checked: false,
+  });
+
+  const [goalSet, setGoalSet] = useState([]);
+
+  useEffect(() => {
+    console.log(goal);
+  }, [goal]);
+
   const [totalTransactions, setTotalTransactions] = useState([]);
 
   const [balance, setBalance] = useState(0);
@@ -205,6 +216,25 @@ function App() {
       });
     }
   };
+
+  const handleGoalChange = (e) => {
+    const { name, value } = e.target;
+
+    setGoal({
+      ...goal,
+      [name]: value,
+    });
+  };
+
+  const handleGoalSubmit = (e) => {
+    e.preventDefault();
+
+    setGoalSet([...goalSet, goal]);
+  };
+
+  useEffect(() => {
+    console.log(goalSet);
+  }, [goalSet]);
 
   const handleDelete = (index, transaction) => {
     if (transaction === "income") {
@@ -437,15 +467,7 @@ function App() {
           >
             Income
           </button>
-          <button
-            className={toggleButtonClass(4)}
-            onClick={() => {
-              setView("goals");
-              handleButtonClick(4);
-            }}
-          >
-            Add Goals
-          </button>
+
           <div></div>
         </div>
         <div className="mainDisplay">
@@ -505,44 +527,49 @@ function App() {
                   <div className="expenseTransactions">
                     <p className="transactionHeader">Expense Transactions</p>
                     <div className="expenseLists">
-                      {expenseTransactionSet.map((transaction, index) => (
-                        <div key={index} className="expenseCard">
-                          <span className="material-symbols-outlined">
-                            savings
-                          </span>
-                          <div className="circle"></div>
-                          <p className="transactionName">{transaction.name}</p>
-                          <div className="transactionDetails">
-                            <p className="transactionAmount">
-                              <span className="details">
-                                ${transaction.amount}
-                              </span>
+                      {expenseTransactionSet
+                        .slice()
+                        .reverse()
+                        .map((transaction, index) => (
+                          <div key={index} className="expenseCard">
+                            <span className="material-symbols-outlined">
+                              savings
+                            </span>
+                            <div className="circle"></div>
+                            <p className="transactionName">
+                              {transaction.name}
                             </p>
-                            <p className="transactionDate">
-                              <span className="material-symbols-outlined detailsIcon">
-                                calendar_month
-                              </span>
-                              <span className="details">
-                                {transaction.date}
-                              </span>
-                            </p>
-                            <p className="transactionDescription">
-                              <span className="material-symbols-outlined detailsIcon">
-                                description
-                              </span>
-                              <span className="details">
-                                {transaction.description}
-                              </span>
-                            </p>
+                            <div className="transactionDetails">
+                              <p className="transactionAmount">
+                                <span className="details">
+                                  ${transaction.amount}
+                                </span>
+                              </p>
+                              <p className="transactionDate">
+                                <span className="material-symbols-outlined detailsIcon">
+                                  calendar_month
+                                </span>
+                                <span className="details">
+                                  {transaction.date}
+                                </span>
+                              </p>
+                              <p className="transactionDescription">
+                                <span className="material-symbols-outlined detailsIcon">
+                                  description
+                                </span>
+                                <span className="details">
+                                  {transaction.description}
+                                </span>
+                              </p>
+                            </div>
+                            <span
+                              className="material-symbols-outlined deleteIcon detailsIcon"
+                              onClick={() => handleDelete(index, "expense")}
+                            >
+                              delete
+                            </span>
                           </div>
-                          <span
-                            className="material-symbols-outlined deleteIcon detailsIcon"
-                            onClick={() => handleDelete(index, "expense")}
-                          >
-                            delete
-                          </span>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                   <div className="expenseGraph">
@@ -769,20 +796,28 @@ function App() {
                 </div>
                 <div className="financeGoals">
                   <div className="myBalanceTitle">Finance Goals</div>
-                  <button onClick={openPopup}></button>
+                  <button onClick={openPopup} className="addGoalBtn">
+                    + Add Goal{" "}
+                  </button>
                   <div className="goals"></div>
                   {isOpen && (
                     <div className="goalForm popup">
-                      <form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          console.log("lmao");
-                        }}
-                        className="goalForm"
-                      >
+                      <form onSubmit={handleGoalSubmit} className="goalForm">
                         <p>
                           <label className="goalLabel">Goal:</label>
-                          <input type="text" placeholder="Save 500$"></input>
+                          <input
+                            name="name"
+                            type="text"
+                            placeholder="Save 500$"
+                            onChange={handleGoalChange}
+                          ></input>
+                          <input
+                            name="checked"
+                            type="checkbox"
+                            onChange={() =>
+                              setGoal({ ...goal, checked: !goal.checked })
+                            }
+                          ></input>
                         </p>
 
                         <button type="submit" className="submitGoalBtn">
