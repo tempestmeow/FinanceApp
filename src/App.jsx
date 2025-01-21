@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -47,6 +47,8 @@ function App() {
   const [goal, setGoal] = useState({
     name: "Save $500",
   });
+
+  const popupRef = useRef(null);
 
   const [goalSet, setGoalSet] = useState([]);
 
@@ -120,6 +122,18 @@ function App() {
       }
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [popupRef]);
 
   useEffect(() => {
     setBalance(totalIncome - totalExpenses);
@@ -282,6 +296,7 @@ function App() {
         backgroundColor: "#ffde59",
         borderColor: "#f1c40f",
         borderWidth: 1,
+        borderRadius: 7,
       },
       {
         label: "Expense",
@@ -309,10 +324,11 @@ function App() {
         backgroundColor: "#41d5d1",
         borderColor: "#1abc9c",
         borderWidth: 1,
+        borderWidth: 1,
+        borderRadius: 7,
       },
     ],
   };
-
   const incomeData = {
     labels: incomeTransactionSet.map((transaction) => transaction.name),
     datasets: [
@@ -437,7 +453,27 @@ function App() {
 
   return (
     <>
-      <div className="body">
+      {isOpen && (
+        <div className="popup" ref={popupRef}>
+          <form onSubmit={handleGoalSubmit} className="goalForm">
+            <p>
+              <label className="goalLabel">Goal:</label>
+              <input
+                name="name"
+                type="text"
+                placeholder="Save 500$"
+                onChange={handleGoalChange}
+                autoComplete="off"
+              ></input>
+            </p>
+
+            <button type="submit" className="submitGoalBtn">
+              + Add Expense
+            </button>
+          </form>
+        </div>
+      )}
+      <div className={isOpen ? "body blurred" : "body"}>
         <div className="userNavigation">
           <button
             className={toggleButtonClass(0)}
@@ -775,7 +811,44 @@ function App() {
                 <div className="cashFlowTitle">Cashflow</div>
                 <div className="cashflow">
                   <div className="quarterBalanceGraph"></div>
-                  <Bar data={quarterBalanceData} />
+                  <Bar
+                    data={quarterBalanceData}
+                    options={{
+                      plugins: {
+                        legend: {},
+                      },
+                      scales: {
+                        x: {
+                          ticks: {
+                            font: {
+                              size: 12,
+                              family: "Roboto",
+                              weight: 200,
+                            },
+                            color: "white",
+                          },
+                          grid: {
+                            display: false,
+                            drawBorder: false,
+                          },
+                        },
+                        y: {
+                          ticks: {
+                            font: {
+                              size: 12,
+                              family: "Roboto",
+                              weight: 300,
+                            },
+                            color: "white",
+                          },
+                          grid: {
+                            display: false,
+                            drawBorder: false,
+                          },
+                        },
+                      },
+                    }}
+                  />
                 </div>
               </div>
 
@@ -833,26 +906,6 @@ function App() {
                       </button>
                     </div>
                   </div>
-                  <div className="goals"></div>
-                  {isOpen && (
-                    <div className="goalForm popup">
-                      <form onSubmit={handleGoalSubmit} className="goalForm">
-                        <p>
-                          <label className="goalLabel">Goal:</label>
-                          <input
-                            name="name"
-                            type="text"
-                            placeholder="Save 500$"
-                            onChange={handleGoalChange}
-                          ></input>
-                        </p>
-
-                        <button type="submit" className="submitGoalBtn">
-                          + Add Expense
-                        </button>
-                      </form>
-                    </div>
-                  )}
                 </div>
               </div>
             </>
