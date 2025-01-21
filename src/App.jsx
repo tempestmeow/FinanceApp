@@ -46,14 +46,13 @@ function App() {
 
   const [goal, setGoal] = useState({
     name: "Save $500",
-    checked: false,
   });
 
   const [goalSet, setGoalSet] = useState([]);
 
-  useEffect(() => {
-    console.log(goal);
-  }, [goal]);
+  // useEffect(() => {
+  //   console.log(goal);
+  // }, [goal]);
 
   const [totalTransactions, setTotalTransactions] = useState([]);
 
@@ -230,11 +229,13 @@ function App() {
     e.preventDefault();
 
     setGoalSet([...goalSet, goal]);
+
+    setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    console.log(goalSet);
-  }, [goalSet]);
+  // useEffect(() => {
+  //   console.log(goalSet);
+  // }, [goalSet]);
 
   const handleDelete = (index, transaction) => {
     if (transaction === "income") {
@@ -425,6 +426,11 @@ function App() {
 
   const toggleButtonClass = (i) => {
     return activeButton === i ? "activeButton" : "userButton";
+  };
+
+  const handleGoalDelete = (index) => {
+    const goalLeft = goalSet.filter((_, i) => i !== index);
+    setGoalSet(goalLeft);
   };
 
   return (
@@ -796,9 +802,33 @@ function App() {
                 </div>
                 <div className="financeGoals">
                   <div className="myBalanceTitle">Finance Goals</div>
-                  <button onClick={openPopup} className="addGoalBtn">
-                    + Add Goal{" "}
-                  </button>
+                  <div className="financeGoalCard">
+                    <button onClick={openPopup} className="addGoalBtn">
+                      + Add Goal{" "}
+                    </button>
+                    <div className="goalList">
+                      {goalSet.map((goal, index) => (
+                        <div className="goalCard" key={index}>
+                          <span>
+                            {index + 1}. {goal.name}
+                          </span>
+                          <span>
+                            {" "}
+                            <input
+                              className="goalCheckBox"
+                              type="checkbox"
+                            ></input>
+                          </span>
+                          <span
+                            className="material-symbols-outlined deleteIcon detailsIcon"
+                            onClick={() => handleGoalDelete(index)}
+                          >
+                            delete
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   <div className="goals"></div>
                   {isOpen && (
                     <div className="goalForm popup">
@@ -810,13 +840,6 @@ function App() {
                             type="text"
                             placeholder="Save 500$"
                             onChange={handleGoalChange}
-                          ></input>
-                          <input
-                            name="checked"
-                            type="checkbox"
-                            onChange={() =>
-                              setGoal({ ...goal, checked: !goal.checked })
-                            }
                           ></input>
                         </p>
 
