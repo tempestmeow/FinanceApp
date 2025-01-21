@@ -228,9 +228,11 @@ function App() {
   const handleGoalSubmit = (e) => {
     e.preventDefault();
 
-    setGoalSet([...goalSet, goal]);
+    if (goalSet.length < 4) {
+      setGoalSet([...goalSet, goal]);
 
-    setIsOpen(!isOpen);
+      setIsOpen(!isOpen);
+    }
   };
 
   // useEffect(() => {
@@ -801,32 +803,34 @@ function App() {
                   </div>
                 </div>
                 <div className="financeGoals">
-                  <div className="myBalanceTitle">Finance Goals</div>
+                  <div className="myBalanceTitle financeTitle">
+                    Finance Goals
+                  </div>
                   <div className="financeGoalCard">
-                    <button onClick={openPopup} className="addGoalBtn">
-                      + Add Goal{" "}
-                    </button>
                     <div className="goalList">
                       {goalSet.map((goal, index) => (
                         <div className="goalCard" key={index}>
-                          <span>
-                            {index + 1}. {goal.name}
-                          </span>
-                          <span>
-                            {" "}
-                            <input
-                              className="goalCheckBox"
-                              type="checkbox"
-                            ></input>
-                          </span>
-                          <span
-                            className="material-symbols-outlined deleteIcon detailsIcon"
-                            onClick={() => handleGoalDelete(index)}
-                          >
-                            delete
-                          </span>
+                          <span>• {goal.name}</span>
+                          <div className="goalNav">
+                            <span>
+                              {" "}
+                              <input
+                                className="goalCheckBox"
+                                type="checkbox"
+                              ></input>
+                            </span>
+                            <span
+                              className="material-symbols-outlined goalDeleteIcon"
+                              onClick={() => handleGoalDelete(index)}
+                            >
+                              delete
+                            </span>
+                          </div>
                         </div>
                       ))}
+                      <button onClick={openPopup} className="addGoalBtn">
+                        +{" "}
+                      </button>
                     </div>
                   </div>
                   <div className="goals"></div>

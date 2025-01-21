@@ -354,6 +354,7 @@ p {
   font-size: 2.3rem;
   font-family: "Host Grotesk", serif;
   font-weight: 600;
+  margin: 0px;
 }
 
 .myBalance {
@@ -481,4 +482,77 @@ p {
 
 .goalCheckBox {
   width: 10px;
+}
+
+.goalList {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 300px;
+  font-family: "Roboto", serif;
+  font-weight: 500;
+  font-size: 1.55rem;
+  width: auto;
+}
+
+.goalCard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.goalDeleteIcon {
+  font-size: 15px;
+  display: inline-block;
+  border-radius: 50%;
+  padding: 2px;
+  background-color: #5eec76;
+  color: #232348;
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 1000,
+    "opsz" 40;
+  margin: 0px 25px;
+}
+
+.financeGoalCard {
+  background-color: #232348;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  max-height: 300px;
+  overflow-y: hidden;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 600px;
+  padding: 30px 40px;
+}
+
+.addGoalBtn {
+  align-self: center;
+  margin-bottom: 30px;
+}
+
+.financeGoalCard::-webkit-scrollbar {
+  width: 7px;
+  margin-left: 30px;
+}
+
+.financeGoalCard::-webkit-scrollbar-track {
+  background: #313030;
+  border-radius: 30px;
+}
+
+.financeGoalCard::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #d42aff, #e696ea);
+  height: 90px;
+  border-radius: 30px;
+}
+
+.financeGoalCard:-webkit-scrollbar-thumb:hover {
+  background: #232348;
+}
+
+.financeTitle {
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
