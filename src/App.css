@@ -1,70 +1,45 @@
-@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined");
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-.expenseForm,
-.income {
-  display: flex;
-  gap: 50px;
-}
-
-.addExpense,
-.addIncome {
-  display: flex;
-  flex-direction: column;
-}
-
-input,
-button {
   font-family: "Host Grotesk", serif;
-  font-weight: 500;
-  font-size: 1.3rem;
+  color: white;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 
-.expenseList,
-.incomeList {
-  display: flex;
-  flex-direction: column;
-  padding-top: 10px;
-}
-
-.transactionDetails {
-  display: flex;
-  gap: 10px;
-}
-
-.body {
-  display: flex;
-  gap: 30px;
+body {
+  max-width: inherit;
+  max-height: inherit;
+  margin: 0;
+  padding: 0;
   background-color: #0f0f1f;
-  color: azure;
+}
+.body {
+  padding: 2rem 3rem;
+  padding-top: 4rem;
   height: 100vh;
-  align-items: flex-start;
-  padding: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: start;
 }
 
 .userNavigation {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 2rem;
   background-color: #232348;
-  gap: 10px;
-  padding: 30px;
-  height: 800px;
-  margin-top: 50px;
-  border-radius: 50px;
-  align-items: flex-start;
-  width: 230px;
-  align-items: center;
-  padding-top: 70px;
+  border-radius: 30px;
+  height: 100%;
 }
+
+.cashflow {
+  display: flex;
+  justify-content: center;
+}
+
 .userButton {
   background: none;
   border: none;
@@ -82,6 +57,8 @@ button {
     box-shadow 0.3s ease,
     border-radius 0.3s ease;
   border-radius: 30px;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .userButton:hover {
@@ -91,6 +68,9 @@ button {
 }
 
 .activeButton {
+  font-size: 18px;
+  font-weight: 500;
+
   background-color: #141444;
   color: rgb(247, 205, 236);
   padding: 3px 10px;
@@ -104,38 +84,46 @@ button {
   transition: all 1.15s ease;
 }
 
-.addExpense {
+.mainDisplay {
   display: flex;
-  background-color: #232348;
-  flex-direction: column;
-  gap: 50px;
-  padding: 40px 80px 20px 80px;
-  height: 80vh;
-  border-radius: 50px;
-  align-items: center;
-  width: 600px;
+  padding: 0rem 2rem;
+  width: 100%;
+  gap: 2rem;
+}
+
+.expenseForm {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
 }
 
 .formDiv {
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
-  gap: 10px;
+  max-height: 100%;
 }
 
-.formTitle {
-  font-size: 2.3rem;
-  font-family: "Host Grotesk", serif;
+.formTitle,
+.transactionHeader {
+  font-size: 32px;
   font-weight: 600;
 }
 
-.mainDisplay {
+.addExpense {
   display: flex;
+  background-color: #232348;
+  flex-direction: column;
+  padding: 3rem 4.5rem;
+  border-radius: 30px;
+  gap: 1rem;
+  align-items: center;
 }
 
-.expenseForm {
-  flex: 1;
-  width: auto;
+input,
+button {
+  font-family: "Host Grotesk", serif;
+  font-weight: 500;
+  font-size: 16px;
 }
 
 input {
@@ -143,10 +131,9 @@ input {
   color: #a6a6a6;
   border: 3px solid #9282e1;
   border-radius: 30px;
-  font-size: 1.4rem;
   padding: 10px;
   outline: none;
-  width: 300px;
+  width: 250px;
 }
 
 input:focus {
@@ -161,8 +148,13 @@ input:focus {
 
 .formValue {
   font-family: "Host Grotesk", serif;
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 600;
+  background-color: unset;
+  white-space: nowrap;
+  min-width: 280px;
+  display: flex;
+  justify-content: center;
 }
 
 .formPrice {
@@ -178,9 +170,15 @@ input:focus {
   outline: none;
   font-family: "Host Grotesk", serif;
   border-radius: 30px;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   padding: 2px;
-  margin-right: 70px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 }
 
 option {
@@ -198,31 +196,74 @@ option {
   outline: none;
   font-family: "Host Grotesk", serif;
   font-weight: 700;
-  font-size: 1.03rem;
+  font-size: 0.8rem;
   padding: 10px 20px;
   border-radius: 30px;
+  width: auto;
+}
+
+.expenses {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
 }
 
 .expenseTransactions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  height: 400px;
-}
-
-.transactionHeader {
-  font-size: 2.3rem;
-  font-family: "Host Grotesk", serif;
-  font-weight: 600;
+  width: 100%;
 }
 
 .expenseLists {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-height: 330px;
+  gap: 1rem;
+  max-height: 190px;
   overflow-y: auto;
-  padding-right: 10px;
+  height: 190px;
+  margin: 1rem 0rem;
+}
+
+.expenseCard {
+  gap: 1rem;
+  font-size: 1.1rem;
+  font-family: "Roboto", serif;
+  background-color: #232348;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  padding: 0.4rem 2rem;
+}
+
+.deleteIcon {
+  margin-left: auto;
+}
+
+.transactionDetails {
+  font-size: 0.8rem;
+  gap: 2rem;
+  font-weight: 300;
+  margin-left: 20px;
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.transactionDate,
+.transactionDescription {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.material-symbols-outlined {
+  font-size: 36px;
+}
+
+.detailsIcon {
+  font-size: 16px;
 }
 
 .expenseLists::-webkit-scrollbar {
@@ -244,153 +285,78 @@ option {
   background: #232348;
 }
 
-.expenseCard {
-  display: flex;
-  gap: 20px;
-  font-size: 1.1rem;
-  font-family: "Roboto", serif;
-  background-color: #232348;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  border-radius: 30px;
-  padding: 10px 30px;
-}
-
-.circle {
-  width: 10px;
-  height: 10px;
-  background-color: #e86b70;
-  border-radius: 50%;
-  margin-top: 10px;
-  align-self: flex-start;
-}
-
-.transactionName {
-  font-size: 1.3rem;
-}
-
-.transactionDetails {
-  font-size: 1rem;
-  font-weight: 300;
-  gap: 30px;
-  margin-left: 20px;
-  margin-top: 3px;
-  align-items: center;
-}
-
-.material-symbols-outlined {
-  font-size: 43px;
-  font-weight: 100;
-}
-
-.deleteIcon {
-  font-size: 15px;
-  display: inline-block;
-  border-radius: 50%;
-  padding: 3px;
-  background-color: white;
-  color: #232348;
-  font-variation-settings:
-    "FILL" 0,
-    "wght" 800,
-    "opsz" 20;
-  margin: 0px 25px;
-}
-
-.detailsIcon {
-  font-size: 17px;
-  font-weight: 10;
-}
-
-p {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.transactionDescription {
-  width: 250px;
-}
-
-.expenseForm {
-  margin-top: 50px;
-}
-
 .expenseGraph {
-  width: 100%;
   background-color: #232348;
-  height: 380px;
+  height: 300px;
   padding: 30px;
   border-radius: 50px;
+  width: 100%;
 }
 
-.expenses {
+.dashboardLeft {
   display: flex;
   flex-direction: column;
-  width: 900px;
-  gap: 10px;
-}
-
-.myBalanceValues {
-  background-color: #232348;
-  border-radius: 50px;
-  font-family: "Host Grotesk", serif;
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  padding: 5px 30px;
-  width: 650px;
-}
-
-.myBalanceValue {
-  font-size: 3.4rem;
-  padding-left: 30px;
-  font-weight: 800;
-  padding-top: 20px;
-}
-
-.myBalanceTitle {
-  font-size: 2.3rem;
-  font-family: "Host Grotesk", serif;
-  font-weight: 600;
-  margin: 0px;
+  gap: 1rem;
 }
 
 .myBalance {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
-.myBalanceGraph {
-  height: 150px;
-  width: auto;
-}
-
-.dashboardLeft {
-  margin-top: 50px;
-  margin-left: 20px;
-  padding: 10px 0px;
-}
-
+.myBalanceTitle,
 .cashFlowTitle {
-  font-size: 2.3rem;
-  font-family: "Host Grotesk", serif;
+  font-size: 26px;
   font-weight: 600;
-  margin-top: 10px;
-  margin-bottom: 10px;
+}
+
+.myBalanceValues {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: #232348;
+  border-radius: 30px;
+}
+
+.myBalanceValue {
+  font-size: 36px;
+  font-weight: 600;
 }
 
 .cashflow {
+  padding: 1rem;
   background-color: #232348;
-  border-radius: 50px;
-  font-family: "Host Grotesk", serif;
+  border-radius: 30px;
+}
+
+.myBalanceGraph {
+  min-width: 25vw;
+  max-width: 25vw;
+
+  height: auto;
+}
+
+.dashboardRight {
   display: flex;
   flex-direction: column;
-  width: 400px;
-  padding: 5px 30px;
-  width: 650px;
+  gap: 2rem;
+}
+
+.recentTransactions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recentTransactionList {
+  max-height: 245px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  overflow: hidden;
+  min-width: 100%;
 }
 
 .recentExpenseCard {
@@ -400,42 +366,113 @@ p {
   font-family: "Roboto", serif;
 }
 
-.recentIncomeCard {
-  color: #07ff2f;
-  font-size: 1rem;
-  font-weight: 500;
-  font-family: "Roboto", serif;
-}
-
-.recentTransactionList {
-  display: flex;
-  width: 550px;
-  max-height: 240px;
-  overflow: hidden;
-  flex-direction: column;
-  gap: 20px;
-  padding: 10px;
-  align-items: center;
-}
-
 .recentCard {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   display: flex;
   justify-content: space-between;
   width: 500px;
   background-color: #232348;
   padding: 15px 20px;
   border-radius: 30px;
+  overflow: hidden;
+  color: inherit;
 }
 
-.dashboardRight {
-  margin-top: 50px;
-  margin-left: 20px;
-  padding: 10px 0px;
+.recentIncomeCard {
+  color: #07ff2f;
 }
 
+.recentName,
 .recentAmount {
-  font-weight: 700;
+  color: inherit;
+}
+
+.financeGoals {
+  margin-bottom: 1.5rem;
+}
+
+.financeGoalCard {
+  background-color: var(--secondary-bg);
+  border-radius: var(--border-radius-xlarge);
+  padding: 1.5rem;
+  max-height: 300px;
+  position: relative;
+}
+
+.goalList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  font-family: "Roboto", serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.goalCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goalCheckBox {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+}
+
+.goalNav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.goalDeleteIcon {
+  font-size: 0.9rem;
+  border-radius: 50%;
+  padding: 2px;
+  background-color: #5eec76;
+  color: var(--secondary-bg);
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 800,
+    "OPSZ" 24;
+  cursor: pointer;
+}
+
+.addGoalBtn {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  padding: 0.5rem 1.5rem;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  color: white;
+  width: 90%;
+  max-width: 400px;
+}
+
+.goalLabel {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-family: "Host Grotesk", serif;
+  font-weight: 600;
+}
+
+.blurred {
+  filter: blur(3.3px);
+  transition:
+    filter 0.8s ease,
+    pointer-events 0s ease 0.8s;
 }
 
 .goalForm {
@@ -449,11 +486,41 @@ p {
   border: 4px solid #e08df5;
 }
 
-.goalLabel {
-  font-size: 2.3rem;
+.financeGoalCard {
+  background-color: #232348;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  min-height: 230px;
+}
+
+.financeGoals {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.addGoalBtn {
+  background-color: #00bf5e;
+  color: white;
+  border: none;
+  outline: none;
   font-family: "Host Grotesk", serif;
-  font-weight: 600;
-  padding-right: 10px;
+  font-weight: 700;
+  font-size: 1.03rem;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+
+.goalNav {
+  color: black;
+}
+
+.addGoalBtn {
+  align-self: center;
+  margin-bottom: 30px;
+  position: absolute;
+  top: 240px;
 }
 
 .submitGoalBtn {
@@ -469,111 +536,210 @@ p {
   width: 250px;
 }
 
-.addGoalBtn {
-  background-color: #00bf5e;
-  color: white;
-  border: none;
-  outline: none;
-  font-family: "Host Grotesk", serif;
-  font-weight: 700;
-  font-size: 1.03rem;
-  padding: 10px 20px;
-  border-radius: 30px;
-}
-
-.goalCheckBox {
-  width: 10px;
-}
-
-.goalList {
+.goalPopup {
   display: flex;
-  flex-direction: column;
-  gap: 25px;
-  width: 300px;
-  font-family: "Roboto", serif;
-  font-weight: 500;
-  font-size: 1.55rem;
-  width: auto;
+  gap: 1rem;
 }
 
-.goalCard {
-  display: flex;
-  justify-content: space-between;
+@media screen and (max-width: 1200px) {
+  .myBalanceGraph {
+    min-width: unset;
+    max-width: unset;
+  }
+
+  .mainDisplay {
+    padding: 0rem 1rem;
+  }
+
+  .addExpense {
+    padding: 2rem 3rem;
+  }
+
+  .expenseForm {
+    flex-direction: column;
+  }
 }
 
-.goalDeleteIcon {
-  font-size: 15px;
-  display: inline-block;
-  border-radius: 50%;
-  padding: 2px;
-  background-color: #5eec76;
-  color: #232348;
-  font-variation-settings:
-    "FILL" 1,
-    "wght" 1000,
-    "opsz" 40;
-  margin: 0px 25px;
+@media screen and (max-width: 1024px) {
+  .body {
+    padding: 1rem;
+    padding-top: 2rem;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .userNavigation {
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    padding: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .userButton,
+  .activeButton {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .mainDisplay {
+    flex-direction: column;
+  }
+
+  .dashboardLeft,
+  .dashboardRight {
+    width: 100%;
+  }
+
+  .recentCard {
+    width: 100%;
+  }
 }
 
-.financeGoalCard {
-  background-color: #232348;
-  border-radius: 50px;
-  display: flex;
-  flex-direction: column;
-  max-height: 300px;
-  height: 300px;
-  overflow-y: hidden;
-  margin-left: 20px;
-  margin-right: 20px;
-  width: 600px;
-  padding: 30px 40px;
-  position: relative;
+@media screen and (max-width: 768px) {
+  .transactionDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .expenseLists {
+    height: auto;
+    max-height: 350px;
+  }
+
+  .deleteIcon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .expenseCard {
+    position: relative;
+  }
+
+  .formValue {
+    font-size: 1.3rem;
+    min-width: 220px;
+  }
+
+  .addExpense {
+    padding: 2rem 1.5rem;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .form-container {
+    width: 100%;
+  }
 }
 
-.addGoalBtn {
-  align-self: center;
-  margin-bottom: 30px;
-  position: absolute;
-  top: 240px;
+@media screen and (max-width: 576px) {
+  .userNavigation {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .userButton,
+  .activeButton {
+    font-size: 15px;
+    padding: 3px 8px;
+  }
+
+  .formTitle,
+  .transactionHeader,
+  .myBalanceTitle,
+  .cashFlowTitle {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .myBalanceValue {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .recentCard {
+    padding: 10px 15px;
+    font-size: 1rem;
+  }
+
+  .goalPopup {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .goalForm {
+    padding: 30px 20px;
+  }
+
+  .submitGoalBtn {
+    width: 100%;
+  }
+
+  .popup {
+    width: 85%;
+    max-width: 280px;
+  }
+
+  .transactionName {
+    font-size: 1rem;
+  }
 }
 
-.financeGoalCard::-webkit-scrollbar {
-  width: 7px;
-  margin-left: 30px;
+@media screen and (max-width: 768px) {
+  .expenseCard .circle {
+    display: none;
+  }
+
+  .transactionName {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .expenseCard .material-symbols-outlined:first-child {
+    margin-bottom: 0.5rem;
+  }
 }
 
-.financeGoalCard::-webkit-scrollbar-track {
-  background: #313030;
-  border-radius: 30px;
+@media screen and (max-width: 768px) {
+  .addGoalBtn {
+  }
+
+  .financeGoalCard {
+    min-height: auto;
+    padding-bottom: 2rem;
+  }
+
+  .goalList {
+    max-height: 150px;
+  }
 }
 
-.financeGoalCard::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #d42aff, #e696ea);
-  height: 90px;
-  border-radius: 30px;
+.cashflow,
+.myBalanceValues,
+.expenseGraph {
+  overflow: hidden;
 }
 
-.financeGoalCard:-webkit-scrollbar-thumb:hover {
-  background: #232348;
-}
-
-.financeTitle {
-  margin-top: 30px;
-  margin-bottom: 15px;
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .popup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  color: white;
+  background-color: #232348;
+  border-radius: 50px;
+  border: 4px solid #e08df5;
 }
 
-.blurred {
-  filter: blur(3.3px);
-  transition:
-    filter 0.8s ease,
-    pointer-events 0s ease 0.8s;
+.expenseGraph {
+  margin-bottom: 1rem;
 }
