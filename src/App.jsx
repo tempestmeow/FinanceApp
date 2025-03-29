@@ -52,10 +52,6 @@ function App() {
 
   const [goalSet, setGoalSet] = useState([]);
 
-  // useEffect(() => {
-  //   console.log(goal);
-  // }, [goal]);
-
   const [totalTransactions, setTotalTransactions] = useState([]);
 
   const [balance, setBalance] = useState(0);
@@ -64,7 +60,7 @@ function App() {
     name: "Sweldo",
     amount: 5000,
     date: new Date().toISOString().substring(0, 10),
-    description: "Digima Salary",
+    description: "Salary",
     quarter: 1,
     type: "expense",
   });
@@ -456,7 +452,7 @@ function App() {
       {isOpen && (
         <div className="popup" ref={popupRef}>
           <form onSubmit={handleGoalSubmit} className="goalForm">
-            <p>
+            <p class="goalPopup">
               <label className="goalLabel">Goal:</label>
               <input
                 name="name"
@@ -476,24 +472,6 @@ function App() {
       <div className={isOpen ? "body blurred" : "body"}>
         <div className="userNavigation">
           <button
-            className={toggleButtonClass(0)}
-            onClick={() => {
-              setView("dashboard");
-              handleButtonClick(0);
-            }}
-          >
-            Dashboard
-          </button>
-          <button
-            className={toggleButtonClass(1)}
-            onClick={() => {
-              setView("dashboard");
-              handleButtonClick(1);
-            }}
-          >
-            Transactions
-          </button>
-          <button
             className={toggleButtonClass(2)}
             onClick={() => {
               setView("expense");
@@ -511,6 +489,15 @@ function App() {
           >
             Income
           </button>
+          <button
+            className={toggleButtonClass(0)}
+            onClick={() => {
+              setView("dashboard");
+              handleButtonClick(0);
+            }}
+          >
+            Dashboard
+          </button>
 
           <div></div>
         </div>
@@ -525,51 +512,55 @@ function App() {
                     onSubmit={(e) => handleSubmit(e, "expense")}
                   >
                     <div className="formValue">
-                      Total Expense:{" "}
-                      <span className="formPrice">${totalExpenses}</span>
+                      Total Expense:&nbsp;
+                      <span className="formPrice"> ${totalExpenses}</span>
                     </div>
-                    <input
-                      type="text"
-                      placeholder="Title"
-                      name="name"
-                      onChange={(e) => handleChange(e, "expense")}
-                      value={expenseTransactions.name}
-                      autoComplete="off"
-                    ></input>
-                    <input
-                      type="number"
-                      placeholder="Amount"
-                      name="amount"
-                      onChange={(e) => handleChange(e, "expense")}
-                      value={expenseTransactions.amount}
-                    ></input>
-                    <input
-                      type="date"
-                      placeholder="Date"
-                      name="date"
-                      onChange={(e) => handleChange(e, "expense")}
-                      value={expenseTransactions.date}
-                    ></input>
-                    <select className="selectCategory" placeholder="category">
-                      <option value="food">Food</option>
-                      <option value="grocery">Grocery</option>
-                      <option value="bills">Bills</option>
-                    </select>
-                    <input
-                      type="text"
-                      placeholder="Description"
-                      name="description"
-                      onChange={(e) => handleChange(e, "expense")}
-                      value={expenseTransactions.description}
-                    ></input>
-                    <button type="submit" className="submitBtn">
-                      + Add Expense
-                    </button>
+                    <div className="form-container">
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        name="name"
+                        onChange={(e) => handleChange(e, "expense")}
+                        value={expenseTransactions.name}
+                        autoComplete="off"
+                      ></input>
+                      <input
+                        type="number"
+                        placeholder="Amount"
+                        name="amount"
+                        onChange={(e) => handleChange(e, "expense")}
+                        value={expenseTransactions.amount}
+                      ></input>
+                      <input
+                        type="date"
+                        placeholder="Date"
+                        name="date"
+                        onChange={(e) => handleChange(e, "expense")}
+                        value={expenseTransactions.date}
+                      ></input>
+                      <select className="selectCategory" placeholder="category">
+                        <option value="food">Food</option>
+                        <option value="grocery">Grocery</option>
+                        <option value="bills">Bills</option>
+                      </select>
+                      <input
+                        type="text"
+                        placeholder="Description"
+                        name="description"
+                        onChange={(e) => handleChange(e, "expense")}
+                        value={expenseTransactions.description}
+                      ></input>
+                      <button type="submit" className="submitBtn">
+                        + Add Expense
+                      </button>
+                    </div>
                   </form>
                 </div>
                 <div className="expenses">
                   <div className="expenseTransactions">
-                    <p className="transactionHeader">Expense Transactions</p>
+                    <div className="transactionHeader">
+                      Expense Transactions
+                    </div>
                     <div className="expenseLists">
                       {expenseTransactionSet
                         .slice()
@@ -580,31 +571,31 @@ function App() {
                               savings
                             </span>
                             <div className="circle"></div>
-                            <p className="transactionName">
+                            <div className="transactionName">
                               {transaction.name}
-                            </p>
+                            </div>
                             <div className="transactionDetails">
-                              <p className="transactionAmount">
+                              <div className="transactionAmount">
                                 <span className="details">
                                   ${transaction.amount}
                                 </span>
-                              </p>
-                              <p className="transactionDate">
+                              </div>
+                              <div className="transactionDate">
                                 <span className="material-symbols-outlined detailsIcon">
                                   calendar_month
                                 </span>
                                 <span className="details">
                                   {transaction.date}
                                 </span>
-                              </p>
-                              <p className="transactionDescription">
+                              </div>
+                              <div className="transactionDescription">
                                 <span className="material-symbols-outlined detailsIcon">
                                   description
                                 </span>
                                 <span className="details">
                                   {transaction.description}
                                 </span>
-                              </p>
+                              </div>
                             </div>
                             <span
                               className="material-symbols-outlined deleteIcon detailsIcon"
@@ -648,51 +639,53 @@ function App() {
                     onSubmit={(e) => handleSubmit(e, "income")}
                   >
                     <div className="formValue">
-                      Total Income:{" "}
+                      Total Income:&nbsp;
                       <span className="formPrice">${totalIncome}</span>
                     </div>
-                    <input
-                      type="text"
-                      placeholder="Title"
-                      name="name"
-                      onChange={(e) => handleChange(e, "income")}
-                      value={incomeTransactions.name}
-                      autoComplete="off"
-                    ></input>
-                    <input
-                      type="number"
-                      placeholder="Amount"
-                      name="amount"
-                      onChange={(e) => handleChange(e, "income")}
-                      value={incomeTransactions.amount}
-                    ></input>
-                    <input
-                      type="date"
-                      placeholder="Date"
-                      name="date"
-                      onChange={(e) => handleChange(e, "income")}
-                      value={incomeTransactions.date}
-                    ></input>
-                    <select className="selectCategory" placeholder="category">
-                      <option value="food">Food</option>
-                      <option value="grocery">Grocery</option>
-                      <option value="bills">Bills</option>
-                    </select>
-                    <input
-                      type="text"
-                      placeholder="Description"
-                      name="description"
-                      onChange={(e) => handleChange(e, "expense")}
-                      value={incomeTransactions.description}
-                    ></input>
-                    <button type="submit" className="submitBtn">
-                      + Add Expense
-                    </button>
+                    <div className="form-container">
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        name="name"
+                        onChange={(e) => handleChange(e, "income")}
+                        value={incomeTransactions.name}
+                        autoComplete="off"
+                      ></input>
+                      <input
+                        type="number"
+                        placeholder="Amount"
+                        name="amount"
+                        onChange={(e) => handleChange(e, "income")}
+                        value={incomeTransactions.amount}
+                      ></input>
+                      <input
+                        type="date"
+                        placeholder="Date"
+                        name="date"
+                        onChange={(e) => handleChange(e, "income")}
+                        value={incomeTransactions.date}
+                      ></input>
+                      <select className="selectCategory" placeholder="category">
+                        <option value="food">Food</option>
+                        <option value="grocery">Grocery</option>
+                        <option value="bills">Bills</option>
+                      </select>
+                      <input
+                        type="text"
+                        placeholder="Description"
+                        name="description"
+                        onChange={(e) => handleChange(e, "expense")}
+                        value={incomeTransactions.description}
+                      ></input>
+                      <button type="submit" className="submitBtn">
+                        + Add Expense
+                      </button>
+                    </div>
                   </form>
                 </div>
                 <div className="expenses">
                   <div className="expenseTransactions">
-                    <p className="transactionHeader">Income Transactions</p>
+                    <div className="transactionHeader">Income Transactions</div>
                     <div className="expenseLists">
                       {incomeTransactionSet.map((transaction, index) => (
                         <div key={index} className="expenseCard">
@@ -700,29 +693,31 @@ function App() {
                             savings
                           </span>
                           <div className="circle"></div>
-                          <p className="transactionName">{transaction.name}</p>
+                          <div className="transactionName">
+                            {transaction.name}
+                          </div>
                           <div className="transactionDetails">
-                            <p className="transactionAmount">
+                            <div className="transactionAmount">
                               <span className="details">
                                 ${transaction.amount}
                               </span>
-                            </p>
-                            <p className="transactionDate">
+                            </div>
+                            <div className="transactionDate">
                               <span className="material-symbols-outlined detailsIcon">
                                 calendar_month
                               </span>
                               <span className="details">
                                 {transaction.date}
                               </span>
-                            </p>
-                            <p className="transactionDescription">
+                            </div>
+                            <div className="transactionDescription">
                               <span className="material-symbols-outlined detailsIcon">
                                 description
                               </span>
                               <span className="details">
                                 {transaction.description}
                               </span>
-                            </p>
+                            </div>
                           </div>
                           <span
                             className="material-symbols-outlined deleteIcon detailsIcon"
