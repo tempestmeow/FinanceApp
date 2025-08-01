@@ -33,8 +33,39 @@ ChartJS.register(
   Legend
 );
 
+// Helper functions for localStorage
+const loadFromLocalStorage = (key, defaultValue) => {
+  try {
+    const saved = localStorage.getItem(key);
+    return saved ? JSON.parse(saved) : defaultValue;
+  } catch (error) {
+    console.error(`Error loading ${key} from localStorage:`, error);
+    return defaultValue;
+  }
+};
+
+const saveToLocalStorage = (key, value) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error(`Error saving ${key} to localStorage:`, error);
+  }
+};
+
+// Function to clear all saved data (can be called from browser console)
+window.clearFinanceAppData = () => {
+  localStorage.removeItem("expenseTransactions");
+  localStorage.removeItem("incomeTransactions");
+  localStorage.removeItem("goals");
+  localStorage.removeItem("currentView");
+  localStorage.removeItem("activeButton");
+  console.log("Finance app data cleared. Please refresh the page.");
+};
+
 function App() {
-  const [expenseTransactionSet, setExpenseTransactionsSet] = useState([]);
+  const [expenseTransactionSet, setExpenseTransactionsSet] = useState(() =>
+    loadFromLocalStorage("expenseTransactions", [])
+  );
   const [expenseTransactions, setExpenseTransactions] = useState({
     name: "Foods",
     amount: 2000,
@@ -50,7 +81,9 @@ function App() {
 
   const popupRef = useRef(null);
 
-  const [goalSet, setGoalSet] = useState([]);
+  const [goalSet, setGoalSet] = useState(() =>
+    loadFromLocalStorage("goals", [])
+  );
 
   const [totalTransactions, setTotalTransactions] = useState([]);
 
@@ -64,9 +97,13 @@ function App() {
     quarter: 1,
     type: "expense",
   });
-  const [incomeTransactionSet, setIncomeTransactionsSet] = useState([]);
+  const [incomeTransactionSet, setIncomeTransactionsSet] = useState(() =>
+    loadFromLocalStorage("incomeTransactions", [])
+  );
 
-  const [view, setView] = useState("expense");
+  const [view, setView] = useState(() =>
+    loadFromLocalStorage("currentView", "expense")
+  );
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   let [quarter, setQuarter] = useState(1);
@@ -166,30 +203,6 @@ function App() {
     }
     setTotalIncome(sum);
   }, [incomeTransactionSet]);
-
-  useEffect(() => {
-    if (expenseTransactionSet.length > 0) {
-      setTotalTransactions((prevTotalTransactions) => [
-        ...prevTotalTransactions,
-        { ...expenseTransactions, className: "recentExpenseCard" },
-      ]);
-    }
-  }, [expenseTransactionSet]);
-
-  useEffect(() => {
-    if (incomeTransactionSet.length > 0) {
-      setTotalTransactions((prevTotalTransactions) => [
-        ...prevTotalTransactions,
-        { ...incomeTransactions, className: "recentIncomeCard" },
-      ]);
-    }
-  }, [incomeTransactionSet]);
-
-  useEffect(() => {
-    if (totalTransactions.length > 0) {
-      console.log(totalTransactions);
-    }
-  }, [totalTransactions]);
 
   const handleSubmit = (e, expense) => {
     e.preventDefault();
@@ -432,7 +445,45 @@ function App() {
     ],
   };
 
-  const [activeButton, setActiveButton] = useState(2);
+  const [activeButton, setActiveButton] = useState(() =>
+    loadFromLocalStorage("activeButton", 2)
+  );
+
+  // Auto-save effects - save data to localStorage whenever state changes
+  useEffect(() => {
+    saveToLocalStorage("expenseTransactions", expenseTransactionSet);
+  }, [expenseTransactionSet]);
+
+  useEffect(() => {
+    saveToLocalStorage("incomeTransactions", incomeTransactionSet);
+  }, [incomeTransactionSet]);
+
+  useEffect(() => {
+    saveToLocalStorage("goals", goalSet);
+  }, [goalSet]);
+
+  useEffect(() => {
+    saveToLocalStorage("currentView", view);
+  }, [view]);
+
+  useEffect(() => {
+    saveToLocalStorage("activeButton", activeButton);
+  }, [activeButton]);
+
+  // Rebuild totalTransactions from saved data on component mount
+  useEffect(() => {
+    const allTransactions = [
+      ...expenseTransactionSet.map((transaction) => ({
+        ...transaction,
+        className: "recentExpenseCard",
+      })),
+      ...incomeTransactionSet.map((transaction) => ({
+        ...transaction,
+        className: "recentIncomeCard",
+      })),
+    ];
+    setTotalTransactions(allTransactions);
+  }, [expenseTransactionSet, incomeTransactionSet]);
 
   const handleButtonClick = (i) => {
     setActiveButton(i);
